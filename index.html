@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YukExpress - Apple Silicon Freight Platform</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        appleBg: '#FFFFFF',
+                        appleCard: '#FFFFFF',
+                        appleBlue: '#0284C7',
+                        appleCyan: '#06B6D4',
+                        appleDark: '#0F172A',
+                        appleGray: '#F8FAFC'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
+        body { background-color: #FFFFFF; color: #0F172A; overflow-x: hidden; }
+
+        /* Apple Frosted Glass Light */
+        .glass-panel-white {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(28px) saturate(190%);
+            -webkit-backdrop-filter: blur(28px) saturate(190%);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            box-shadow: 0 20px 50px -10px rgba(2, 132, 199, 0.06), 0 1px 3px rgba(0, 0, 0, 0.01);
+        }
+
+        .glass-card-white {
+            background: #FFFFFF;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            box-shadow: 0 10px 30px -5px rgba(2, 132, 199, 0.05), 0 1px 2px rgba(0, 0, 0, 0.02);
+        }
+
+        /* Apple Spring Bounce Animations */
+        @keyframes springPop {
+            0% { transform: scale(0.92); opacity: 0; }
+            60% { transform: scale(1.03); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .animate-spring {
+            animation: springPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .apple-btn-bounce {
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .apple-btn-bounce:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.25);
+        }
+        .apple-btn-bounce:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Face Scanner Laser */
+        @keyframes scanLaser {
+            0% { top: 0%; opacity: 0.8; }
+            50% { top: 95%; opacity: 1; }
+            100% { top: 0%; opacity: 0.8; }
+        }
+        .laser-line {
+            animation: scanLaser 2s infinite ease-in-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #F8FAFC; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+    </style>
+</head>
+<body class="h-full bg-appleBg text-appleDark antialiased flex flex-col selection:bg-sky-500 selection:text-white">
+
+    <!-- ============================================ -->
+    <!-- PRELOADER SCREEN -->
+    <!-- ============================================ -->
+    <div id="preloader" class="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center transition-opacity duration-700">
+        <div class="relative w-24 h-24 mb-8 flex items-center justify-center">
+            <div class="absolute inset-0 rounded-full border-4 border-sky-100 animate-pulse"></div>
+            <div class="absolute inset-0 rounded-full border-4 border-sky-600 border-t-transparent animate-spin"></div>
+            <div class="w-12 h-12 bg-sky-600 rounded-2xl shadow-lg shadow-sky-600/30 flex items-center justify-center text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+            </div>
+        </div>
+
+        <div class="text-center space-y-3">
+            <div id="brandAssembly" class="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 flex justify-center gap-1 overflow-hidden">
+                <span class="inline-block transform translate-y-full opacity-0 transition-all duration-500 delay-100 brand-char text-sky-600">Y</span>
+                <span class="inline-block transform translate-y-full opacity-0 transition-all duration-500 delay-150 brand-char text-slate-900">u</span>
+                <span class="inline-block transform translate-y-full opacity-0 transition-all duration-500 delay-200 brand-char text-slate-900">k</span>
+                <span class="inline-block transform translate-y-full opacity-0 transition-all duration-500 delay-250 brand-char text-sky-600">E</span>
+                <span class="inline-block transform translate-y-full opacity-0 transition-all duration-500 delay-300 brand-char text-slate-900">x</span>
+                <span class="inline-block transform translate-y-full opacity-0 transition-all duration-500 delay-350 brand-char text-slate-900">p</span>
+                <span class="inline-block transform translate-y-full opacity-0 transition-all duration-500 delay-400 brand-char text-slate-900">r</span>
+                <span class="inline-block transform translate-y-full opacity-0 transition-all duration-500 delay-450 brand-char text-slate-900">e</span>
+                <span class="inline-block transform translate-y-full opacity-0 transition-all duration-500 delay-500 brand-char text-sky-600">s</span>
+                <span class="inline-block transform translate-y-full opacity-0 transition-all duration-500 delay-550 brand-char text-slate-900">s</span>
+            </div>
+            <div class="flex items-center justify-center gap-2">
+                <span id="loaderCounter" class="text-sm font-extrabold text-sky-600">0%</span>
+                <span class="text-xs font-semibold text-slate-400">&bull; Apple Silicon Engine</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- AUTHENTICATION & FACE ID BIOMETRIC GATE -->
+    <!-- ============================================ -->
+    <div id="authOverlay" class="fixed inset-0 z-40 bg-white flex items-center justify-center p-4 hidden">
+        <div class="w-full max-w-md glass-panel-white p-8 rounded-[36px] shadow-2xl border border-slate-200 animate-spring">
+            
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl mx-auto flex items-center justify-center mb-3 shadow-sm border border-sky-100">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.115 6.845l.209-.374m-5.59-1.921A13.938 13.938 0 0112 11v0a4 4 0 118 0c0 1.017-.07 2.019-.203 3"/></svg>
+                </div>
+                <h1 class="text-xl font-black text-slate-900">YukExpress Kirish</h1>
+                <p class="text-xs font-medium text-slate-500 mt-1">Apple Face ID va ma'lumotlarni tasdiqlash</p>
+            </div>
+
+            <form id="loginForm" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                <div class="grid grid-cols-2 gap-3">
+                    <button type="button" onclick="setAuthRole('kurator')" id="roleBtnKurator" class="py-3 px-4 rounded-2xl font-extrabold text-xs flex items-center justify-center gap-2 transition bg-sky-600 text-white shadow-md shadow-sky-600/20">
+                        <span>Kurator (Yuk Beruvchi)</span>
+                    </button>
+                    <button type="button" onclick="setAuthRole('shofyor')" id="roleBtnShofyor" class="py-3 px-4 rounded-2xl font-extrabold text-xs flex items-center justify-center gap-2 transition bg-slate-100 text-slate-600 border border-slate-200">
+                        <span>Shofyor (Haydovchi)</span>
+                    </button>
+                </div>
+                <input type="hidden" id="authRoleInput" value="kurator">
+
+                <div>
+                    <label class="block text-[11px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Ism va Familiya *</label>
+                    <input type="text" id="authName" required placeholder="Masalan: Anvar Karimov" class="w-full px-4 py-3 rounded-2xl border border-slate-200 text-xs font-bold focus:ring-2 focus:ring-sky-500 outline-none bg-white">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Telefon Raqam *</label>
+                    <div class="flex gap-2">
+                        <select id="authCountry" class="px-3 py-3 rounded-2xl border border-slate-200 text-xs font-extrabold bg-slate-50 outline-none">
+                            <option value="+998">🇺🇿 +998</option>
+                            <option value="+7">🇷🇺 +7</option>
+                            <option value="+1">🇺🇸 +1</option>
+                            <option value="+90">🇹🇷 +90</option>
+                            <option value="+86">🇨🇳 +86</option>
+                        </select>
+                        <input type="tel" id="authPhone" required placeholder="90 123 45 67" class="flex-1 px-4 py-3 rounded-2xl border border-slate-200 text-xs font-bold focus:ring-2 focus:ring-sky-500 outline-none bg-white">
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-center relative overflow-hidden">
+                    <div class="w-20 h-28 mx-auto rounded-[40px] border-2 border-sky-500/60 bg-white relative overflow-hidden flex items-center justify-center shadow-inner">
+                        <div class="absolute inset-0 bg-sky-50/50"></div>
+                        <div class="absolute left-0 right-0 h-0.5 bg-sky-500 laser-line shadow-[0_0_10px_#0ea5e9]"></div>
+                        <svg class="w-10 h-10 text-sky-600 relative z-10" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.115 6.845l.209-.374m-5.59-1.921A13.938 13.938 0 0112 11v0a4 4 0 118 0c0 1.017-.07 2.019-.203 3"/></svg>
+                    </div>
+                    <p id="faceStatusText" class="text-[11px] font-bold text-slate-600 mt-2">Apple Face ID: Yuzni tasdiqlash tayyor</p>
+                </div>
+
+                <button type="submit" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-extrabold py-3.5 rounded-2xl shadow-lg shadow-sky-600/30 apple-btn-bounce text-xs uppercase tracking-wider flex items-center justify-center gap-2">
+                    <span>Face ID Skanerlash va Kirish</span>
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- MAIN PLATFORM INTERFACE -->
+    <!-- ============================================ -->
+    <header class="sticky top-0 z-30 glass-panel-white border-b border-slate-200 px-4 sm:px-8 py-3.5">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-sky-600 rounded-2xl flex items-center justify-center text-white shadow-md shadow-sky-600/20 font-black text-lg">
+                    Y
+                </div>
+                <div>
+                    <span class="text-base font-black tracking-tight text-slate-900">YukExpress</span>
+                    <span class="block text-[10px] font-bold text-sky-600 uppercase tracking-widest">Apple Silicon Logistics</span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <div class="hidden sm:flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200">
+                    <button onclick="switchTab('client')" id="tabBtnClient" class="px-4 py-2 rounded-xl text-xs font-extrabold transition bg-sky-600 text-white shadow-sm">
+                        Kurator (E'lonlar)
+                    </button>
+                    <button onclick="switchTab('driver')" id="tabBtnDriver" class="px-4 py-2 rounded-xl text-xs font-extrabold transition text-slate-600 hover:text-slate-900">
+                        Shofyor (Bozor)
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-2 pl-3 border-l border-slate-200">
+                    <div class="text-right hidden md:block">
+                        <p id="headerUserName" class="text-xs font-extrabold text-slate-900">F Foydalanuvchi</p>
+                        <p id="headerUserRole" class="text-[10px] font-bold text-sky-600 uppercase">Kurator</p>
+                    </div>
+                    <button onclick="logoutUser()" class="p-2 rounded-xl bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-600 text-xs font-bold transition" title="Chiqish">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="sm:hidden flex bg-white border-b border-slate-200 p-2 gap-2">
+        <button onclick="switchTab('client')" id="mobileTabClient" class="flex-1 py-2 rounded-xl text-xs font-extrabold bg-sky-600 text-white">Kurator</button>
+        <button onclick="switchTab('driver')" id="mobileTabDriver" class="flex-1 py-2 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-600">Shofyor</button>
+    </div>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-8">
+        <!-- TAB 1: KURATOR -->
+        <section id="sectionClient" class="space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-5 glass-card-white p-6 sm:p-7 rounded-[32px] border border-slate-200 h-fit">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+                        <div class="w-10 h-10 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center font-bold border border-sky-100">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                        </div>
+                        <div>
+                            <h2 class="text-base font-extrabold text-slate-900">Yangi Yuk E'loni</h2>
+                            <p class="text-xs text-slate-400">Avto-moslashuv va shofyorlarga tarqatish</p>
+                        </div>
+                    </div>
+
+                    <form id="createCargoForm" onsubmit="handlePostCargo(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Jo'nash Nuqtasi *</label>
+                                <input type="text" id="formFrom" required placeholder="Toshkent shahri" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold focus:ring-2 focus:ring-sky-500 outline-none bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Borish Nuqtasi *</label>
+                                <input type="text" id="formTo" required placeholder="Samarqand shahri" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold focus:ring-2 focus:ring-sky-500 outline-none bg-white">
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 flex items-center justify-between">
+                            <div>
+                                <span class="block text-[10px] font-extrabold uppercase tracking-wider text-slate-600">Aniq Manzil / Marshrut</span>
+                                <span class="text-[11px] text-slate-400">Yo'q bo'lsa shofyor bilan kelishiladi</span>
+                            </div>
+                            <div class="flex gap-1 bg-white p-1 rounded-xl border border-slate-200">
+                                <button type="button" onclick="setRoutePresence('bor')" id="btnRouteYes" class="px-4 py-1.5 rounded-lg text-xs font-extrabold bg-sky-600 text-white shadow-sm transition">Bor</button>
+                                <button type="button" onclick="setRoutePresence('yoq')" id="btnRouteNo" class="px-4 py-1.5 rounded-lg text-xs font-extrabold text-slate-600 transition">Yo'q</button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Yuk Tavsifi *</label>
+                                <input type="text" id="formWeight" required placeholder="Qutilar / 5 Tonna" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold focus:ring-2 focus:ring-sky-500 outline-none bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">To'lov Turi *</label>
+                                <select id="formPriceType" onchange="handlePriceTypeChange(this.value)" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold focus:ring-2 focus:ring-sky-500 outline-none bg-white">
+                                    <option value="fixed">Aniq Narx (UZS)</option>
+                                    <option value="advance">Avansli / Kelishiladi</option>
+                                    <option value="negotiable">Kelishuv asosida</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="priceInputWrapper">
+                            <label class="block text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Narx Summasi (UZS) *</label>
+                            <input type="number" id="formPrice" placeholder="3000000" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-extrabold focus:ring-2 focus:ring-sky-500 outline-none bg-white">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-[10px] font-extrabold text-slate-600 uppercase tracking-wider">Transportni Tanlang *</label>
+                                <button type="button" onclick="openCustomVehicleModal()" class="text-[10px] font-extrabold text-sky-600 hover:text-sky-700 flex items-center gap-1">
+                                    <span>+ Yangi Mashina Qo'shish</span>
+                                </button>
+                            </div>
+                            <input type="hidden" id="formTruckType" value="Isuzu 5 Tonna" required>
+                            <div class="grid grid-cols-2 gap-3" id="vehicleSelectorGrid"></div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Aloqa Telefon *</label>
+                            <input type="tel" id="formPhone" required placeholder="+998 90 123 45 67" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold focus:ring-2 focus:ring-sky-500 outline-none bg-white">
+                        </div>
+
+                        <button type="submit" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-extrabold py-3.5 rounded-2xl shadow-lg shadow-sky-600/25 apple-btn-bounce flex items-center justify-center gap-2 text-xs uppercase tracking-wider">
+                            <span>Platformaga E'lon Berish</span>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="flex items-center justify-between glass-card-white p-5 rounded-[24px] border border-slate-200">
+                        <h2 class="text-sm font-extrabold text-slate-900">Mening E'lonlarim</h2>
+                        <span id="clientListingCount" class="bg-sky-50 text-sky-600 text-xs font-extrabold px-3 py-1 rounded-xl border border-sky-100">0 ta e'lon</span>
+                    </div>
+
+                    <div id="clientCargoContainer" class="space-y-3"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SHOFYOR -->
+        <section id="sectionDriver" class="hidden space-y-6">
+            <div class="glass-card-white p-5 rounded-[28px] border border-slate-200 grid grid-cols-1 sm:grid-cols-4 gap-3">
+                <div>
+                    <label class="block text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Qayerdan</label>
+                    <input type="text" id="filterFrom" oninput="renderDriverCargoGrid()" placeholder="Barchasi" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold bg-white outline-none">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Qayerga</label>
+                    <input type="text" id="filterTo" oninput="renderDriverCargoGrid()" placeholder="Barchasi" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold bg-white outline-none">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Transport Turi</label>
+                    <select id="filterTruck" onchange="renderDriverCargoGrid()" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold bg-white outline-none">
+                        <option value="">Barcha Mashinalar</option>
+                        <option value="Isuzu 5 Tonna">Isuzu 5 Tonna</option>
+                        <option value="Isuzu 10 Tonna">Isuzu 10 Tonna</option>
+                        <option value="Tent">Tent</option>
+                        <option value="Tent Fura 120 kub">Tent Fura 120 kub</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Saralash</label>
+                    <select id="filterSort" onchange="renderDriverCargoGrid()" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold bg-white outline-none">
+                        <option value="newest">Eng Yangilari</option>
+                        <option value="price_high">Narxi: Yuqori</option>
+                        <option value="price_low">Narxi: Past</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="driverCargoGrid"></div>
+        </section>
+    </main>
+
+    <!-- CUSTOM VEHICLE MODAL -->
+    <div id="customVehicleModal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="glass-panel-white w-full max-w-sm p-6 rounded-[32px] shadow-2xl border border-slate-200 animate-spring">
+            <h3 class="text-base font-extrabold text-slate-900 mb-1">Yangi Transport Qo'shish</h3>
+            <p class="text-xs text-slate-500 mb-4">Lotin yoki Kiril alifbosida mashina nomini kiriting</p>
+
+            <form onsubmit="handleSaveCustomVehicle(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Transport Nomi *</label>
+                    <input type="text" id="customTruckName" required placeholder="Masalan: MAN Refrigerator" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold bg-white outline-none">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-1">Sig'imi / Hajmi *</label>
+                    <input type="text" id="customTruckCapacity" required placeholder="15 Tonna / 60 kub" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold bg-white outline-none">
+                </div>
+
+                <div class="flex gap-2 pt-2">
+                    <button type="button" onclick="closeCustomVehicleModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold py-2.5 rounded-xl text-xs transition">Bekor qilish</button>
+                    <button type="submit" class="flex-1 bg-sky-600 hover:bg-sky-700 text-white font-extrabold py-2.5 rounded-xl text-xs transition shadow-md shadow-sky-600/20">Qo'shish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="fixed bottom-6 right-6 z-50 glass-panel-white px-5 py-3 rounded-2xl shadow-xl border border-slate-200 transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center font-bold" id="toastIcon">✓</div>
+        <div>
+            <p class="text-xs font-extrabold text-slate-900" id="toastTitle">Muvaffaqiyatli</p>
+            <p class="text-[11px] text-slate-500" id="toastDesc">Amaliyot bajarildi</p>
+        </div>
+    </div>
+
+    <!-- APPLICATION SCRIPT LOGIC -->
+    <script>
+        let currentUser = JSON.parse(localStorage.getItem('yuk_current_user')) || null;
+        let cargoes = JSON.parse(localStorage.getItem('yuk_cargoes_db')) || [
+            {
+                id: 'cg-101', from: 'Toshkent', to: 'Samarqand', weight: 'Qutilar / 5 Tonna',
+                price: 3200000, priceType: 'fixed', truckType: 'Isuzu 5 Tonna', phone: '+998 90 111 22 33',
+                routePresence: 'bor', status: 'pending', createdAt: new Date().toISOString()
+            },
+            {
+                id: 'cg-102', from: 'Buxoro', to: 'Toshkent', weight: 'Mebel / 10 Tonna',
+                price: 5500000, priceType: 'advance', truckType: 'Isuzu 10 Tonna', phone: '+998 91 444 55 66',
+                routePresence: 'bor', status: 'pending', createdAt: new Date().toISOString()
+            }
+        ];
+
+        const defaultVehiclesDB = [
+            { id: 'isuzu_5t', name: 'Isuzu 5 Tonna', capacity: '5 Tonna', img: 'https://i.postimg.cc/cJDdVcCZ/Isuzu-5-Tonna.png' },
+            { id: 'isuzu_10t', name: 'Isuzu 10 Tonna', capacity: '10 Tonna', img: 'https://i.postimg.cc/Pqv6jXrm/Isuzu-5-Tonna-(1).png' },
+            { id: 'tent_truck', name: 'Tent', capacity: '10-15 Tonna', img: 'https://i.postimg.cc/K82LzmNB/Isuzu-5-Tonna-(2).png' },
+            { id: 'tent_fura_120', name: 'Tent Fura 120 kub', capacity: '20-24 Tonna', img: 'https://i.postimg.cc/K8Gzwjf5/Isuzu-5-Tonna-(3).png' }
+        ];
+
+        let vehiclesDB = JSON.parse(localStorage.getItem('yuk_vehicles_db')) || [...defaultVehiclesDB];
+
+        window.addEventListener('load', () => {
+            let progress = 0;
+            const counterEl = document.getElementById('loaderCounter');
+            const chars = document.querySelectorAll('.brand-char');
+
+            chars.forEach((char, idx) => {
+                setTimeout(() => {
+                    char.style.transform = 'translateY(0)';
+                    char.style.opacity = '1';
+                }, 100 + idx * 60);
+            });
+
+            const interval = setInterval(() => {
+                progress += Math.floor(Math.random() * 12) + 8;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        const preloader = document.getElementById('preloader');
+                        preloader.style.opacity = '0';
+                        setTimeout(() => preloader.remove(), 600);
+                        checkAuthState();
+                    }, 400);
+                }
+                counterEl.textContent = progress + '%';
+            }, 60);
+        });
+
+        function checkAuthState() {
+            const overlay = document.getElementById('authOverlay');
+            if (!currentUser) {
+                overlay.classList.remove('hidden');
+            } else {
+                overlay.classList.add('hidden');
+                initApp();
+            }
+        }
+
+        function setAuthRole(role) {
+            const btnKurator = document.getElementById('roleBtnKurator');
+            const btnShofyor = document.getElementById('roleBtnShofyor');
+            document.getElementById('authRoleInput').value = role;
+
+            if (role === 'kurator') {
+                btnKurator.className = "py-3 px-4 rounded-2xl font-extrabold text-xs flex items-center justify-center gap-2 transition bg-sky-600 text-white shadow-md shadow-sky-600/20";
+                btnShofyor.className = "py-3 px-4 rounded-2xl font-extrabold text-xs flex items-center justify-center gap-2 transition bg-slate-100 text-slate-600 border border-slate-200";
+            } else {
+                btnShofyor.className = "py-3 px-4 rounded-2xl font-extrabold text-xs flex items-center justify-center gap-2 transition bg-sky-600 text-white shadow-md shadow-sky-600/20";
+                btnKurator.className = "py-3 px-4 rounded-2xl font-extrabold text-xs flex items-center justify-center gap-2 transition bg-slate-100 text-slate-600 border border-slate-200";
+            }
+        }
+
+        function handleAuthSubmit(event) {
+            event.preventDefault();
+            const role = document.getElementById('authRoleInput').value;
+            const name = document.getElementById('authName').value.trim();
+            const country = document.getElementById('authCountry').value;
+            const phoneInput = document.getElementById('authPhone').value.trim();
+            const phone = `${country} ${phoneInput}`;
+
+            currentUser = { role, name, phone };
+            localStorage.setItem('yuk_current_user', JSON.stringify(currentUser));
+
+            document.getElementById('faceStatusText').textContent = "Apple Face ID Tasdiqlandi! Tizimga kirilmoqda...";
+            setTimeout(() => {
+                document.getElementById('authOverlay').classList.add('hidden');
+                initApp();
+                showToast("Xush kelibsiz!", `${name} (${role === 'kurator' ? 'Kurator' : 'Shofyor'})`);
+            }, 600);
+        }
+
+        function logoutUser() {
+            localStorage.removeItem('yuk_current_user');
+            currentUser = null;
+            location.reload();
+        }
+
+        let selectedRoutePresence = 'bor';
+        function setRoutePresence(val) {
+            selectedRoutePresence = val;
+            const btnYes = document.getElementById('btnRouteYes');
+            const btnNo = document.getElementById('btnRouteNo');
+            if(val === 'bor') {
+                btnYes.className = "px-4 py-1.5 rounded-lg text-xs font-extrabold bg-sky-600 text-white shadow-sm transition";
+                btnNo.className = "px-4 py-1.5 rounded-lg text-xs font-extrabold text-slate-600 transition";
+            } else {
+                btnNo.className = "px-4 py-1.5 rounded-lg text-xs font-extrabold bg-sky-600 text-white shadow-sm transition";
+                btnYes.className = "px-4 py-1.5 rounded-lg text-xs font-extrabold text-slate-600 transition";
+            }
+        }
+
+        function handlePriceTypeChange(val) {
+            const wrapper = document.getElementById('priceInputWrapper');
+            const priceInput = document.getElementById('formPrice');
+            if(val === 'negotiable') {
+                wrapper.style.display = 'none';
+                priceInput.required = false;
+                priceInput.value = '0';
+            } else {
+                wrapper.style.display = 'block';
+                priceInput.required = true;
+                if(priceInput.value === '0') priceInput.value = '';
+            }
+        }
+
+        function renderVehicleSelector() {
+            const grid = document.getElementById('vehicleSelectorGrid');
+            const currentSelected = document.getElementById('formTruckType').value;
+            grid.innerHTML = vehiclesDB.map(v => `
+                <div onclick="selectVehicle('${v.name}')" id="vehBox_${v.name.replace(/\s+/g, '_')}" class="p-3 rounded-2xl border-2 cursor-pointer transition flex flex-col items-center text-center ${currentSelected === v.name ? 'border-sky-600 bg-sky-50/50 shadow-sm' : 'border-slate-200 bg-white hover:border-slate-300'}">
+                    <img src="${v.img}" alt="${v.name}" class="w-16 h-12 object-contain mb-2">
+                    <span class="text-xs font-extrabold text-slate-900">${v.name}</span>
+                    <span class="text-[10px] font-semibold text-slate-500">${v.capacity}</span>
+                </div>
+            `).join('');
+        }
+
+        function selectVehicle(name) {
+            document.getElementById('formTruckType').value = name;
+            renderVehicleSelector();
+        }
+
+        function openCustomVehicleModal() {
+            document.getElementById('customVehicleModal').classList.remove('hidden');
+        }
+
+        function closeCustomVehicleModal() {
+            document.getElementById('customVehicleModal').classList.add('hidden');
+        }
+
+        function handleSaveCustomVehicle(event) {
+            event.preventDefault();
+            const name = document.getElementById('customTruckName').value.trim();
+            const capacity = document.getElementById('customTruckCapacity').value.trim();
+
+            const newVeh = {
+                id: 'veh_' + Date.now(),
+                name: name,
+                capacity: capacity,
+                img: 'https://i.postimg.cc/cJDdVcCZ/Isuzu-5-Tonna.png'
+            };
+
+            vehiclesDB.push(newVeh);
+            localStorage.setItem('yuk_vehicles_db', JSON.stringify(vehiclesDB));
+            closeCustomVehicleModal();
+            renderVehicleSelector();
+            selectVehicle(name);
+            showToast("Transport qo'shildi", name);
+        }
+
+        function initApp() {
+            if(!currentUser) return;
+            document.getElementById('headerUserName').textContent = currentUser.name;
+            document.getElementById('headerUserRole').textContent = currentUser.role === 'kurator' ? 'Kurator' : 'Shofyor';
+            document.getElementById('formPhone').value = currentUser.phone || '';
+
+            renderVehicleSelector();
+            renderClientCargoes();
+            renderDriverCargoGrid();
+
+            if(currentUser.role === 'shofyor') {
+                switchTab('driver');
+            } else {
+                switchTab('client');
+            }
+        }
+
+        function switchTab(tab) {
+            const secClient = document.getElementById('sectionClient');
+            const secDriver = document.getElementById('sectionDriver');
+            const tabBtnClient = document.getElementById('tabBtnClient');
+            const tabBtnDriver = document.getElementById('tabBtnDriver');
+            const mobClient = document.getElementById('mobileTabClient');
+            const mobDriver = document.getElementById('mobileTabDriver');
+
+            if(tab === 'client') {
+                secClient.classList.remove('hidden');
+                secDriver.classList.add('hidden');
+                tabBtnClient.className = "px-4 py-2 rounded-xl text-xs font-extrabold transition bg-sky-600 text-white shadow-sm";
+                tabBtnDriver.className = "px-4 py-2 rounded-xl text-xs font-extrabold transition text-slate-600 hover:text-slate-900";
+                mobClient.className = "flex-1 py-2 rounded-xl text-xs font-extrabold bg-sky-600 text-white";
+                mobDriver.className = "flex-1 py-2 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-600";
+            } else {
+                secDriver.classList.remove('hidden');
+                secClient.classList.add('hidden');
+                tabBtnDriver.className = "px-4 py-2 rounded-xl text-xs font-extrabold transition bg-sky-600 text-white shadow-sm";
+                tabBtnClient.className = "px-4 py-2 rounded-xl text-xs font-extrabold transition text-slate-600 hover:text-slate-900";
+                mobDriver.className = "flex-1 py-2 rounded-xl text-xs font-extrabold bg-sky-600 text-white";
+                mobClient.className = "flex-1 py-2 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-600";
+                renderDriverCargoGrid();
+            }
+        }
+
+        function handlePostCargo(event) {
+            event.preventDefault();
+            const from = document.getElementById('formFrom').value.trim();
+            const to = document.getElementById('formTo').value.trim();
+            const weight = document.getElementById('formWeight').value.trim();
+            const priceType = document.getElementById('formPriceType').value;
+            const price = priceType === 'negotiable' ? 0 : Number(document.getElementById('formPrice').value);
+            const truckType = document.getElementById('formTruckType').value;
+            const phone = document.getElementById('formPhone').value.trim();
+
+            const newCargo = {
+                id: 'cg-' + Date.now(),
+                from, to, weight, price, priceType, truckType, phone,
+                routePresence: selectedRoutePresence,
+                status: 'pending',
+                author: currentUser.name,
+                createdAt: new Date().toISOString()
+            };
+
+            cargoes.unshift(newCargo);
+            localStorage.setItem('yuk_cargoes_db', JSON.stringify(cargoes));
+
+            document.getElementById('createCargoForm').reset();
+            document.getElementById('formTruckType').value = vehiclesDB[0]?.name || 'Isuzu 5 Tonna';
+            renderVehicleSelector();
+            renderClientCargoes();
+            renderDriverCargoGrid();
+            showToast("E'lon joylandi", `${from} ➔ ${to}`);
+        }
+
+        function renderClientCargoes() {
+            const container = document.getElementById('clientCargoContainer');
+            const countEl = document.getElementById('clientListingCount');
+            const myCargoes = cargoes.filter(c => currentUser && c.author === currentUser.name);
+
+            countEl.textContent = `${myCargoes.length} ta e'lon`;
+
+            if(myCargoes.length === 0) {
+                container.innerHTML = `
+                    <div class="glass-card-white p-8 rounded-[24px] text-center text-slate-400">
+                        <p class="text-xs font-bold">Hozircha e'lonlaringiz yo'q. Chap tomondan e'lon bering.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = myCargoes.map(c => `
+                <div class="glass-card-white p-5 rounded-[24px] border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-black text-slate-900">${c.from}</span>
+                            <span class="text-sky-600">➔</span>
+                            <span class="text-xs font-black text-slate-900">${c.to}</span>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold ${c.status === 'accepted' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'bg-sky-50 text-sky-600 border border-sky-200'}">
+                                ${c.status === 'accepted' ? 'Shofyor olgan' : 'Kutilmoqda'}
+                            </span>
+                        </div>
+                        <p class="text-[11px] font-semibold text-slate-500">${c.weight} &bull; ${c.truckType}</p>
+                        <p class="text-xs font-extrabold text-sky-600">${c.priceType === 'negotiable' ? 'Kelishuv asosida' : c.price.toLocaleString() + ' UZS'}</p>
+                    </div>
+                    <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                        <button onclick="deleteCargo('${c.id}')" class="px-3 py-2 rounded-xl bg-rose-50 text-rose-600 hover:bg-rose-100 text-xs font-bold transition">O'chirish</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderDriverCargoGrid() {
+            const grid = document.getElementById('driverCargoGrid');
+            const fFrom = document.getElementById('filterFrom').value.toLowerCase();
+            const fTo = document.getElementById('filterTo').value.toLowerCase();
+            const fTruck = document.getElementById('filterTruck').value;
+            const fSort = document.getElementById('filterSort').value;
+
+            let filtered = cargoes.filter(c => {
+                const matchFrom = c.from.toLowerCase().includes(fFrom);
+                const matchTo = c.to.toLowerCase().includes(fTo);
+                const matchTruck = fTruck === '' || c.truckType === fTruck;
+                return matchFrom && matchTo && matchTruck;
+            });
+
+            if(fSort === 'price_high') {
+                filtered.sort((a,b) => b.price - a.price);
+            } else if(fSort === 'price_low') {
+                filtered.sort((a,b) => a.price - b.price);
+            } else {
+                filtered.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+            }
+
+            if(filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full glass-card-white p-12 rounded-[32px] text-center text-slate-400">
+                        <p class="text-sm font-bold">Mos keluvchi yuklar topilmadi.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(c => `
+                <div class="glass-card-white p-6 rounded-[32px] border border-slate-200 flex flex-col justify-between space-y-4 hover:shadow-xl transition">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="px-3 py-1 rounded-xl text-[10px] font-extrabold bg-sky-50 text-sky-600 border border-sky-100">${c.truckType}</span>
+                            <span class="text-[10px] font-bold text-slate-400">${c.routePresence === 'bor' ? 'Aniq yo\'nalish' : 'Kelishiladi'}</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <h3 class="text-sm font-black text-slate-900">${c.from}</h3>
+                            <span class="text-sky-600 font-bold">➔</span>
+                            <h3 class="text-sm font-black text-slate-900">${c.to}</h3>
+                        </div>
+                        <p class="text-xs font-semibold text-slate-600 mb-3">${c.weight}</p>
+                        <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100 flex justify-between items-center">
+                            <span class="text-[10px] font-extrabold text-slate-400 uppercase">To'lov</span>
+                            <span class="text-xs font-black text-sky-600">${c.priceType === 'negotiable' ? 'Kelishuv asosida' : c.price.toLocaleString() + ' UZS'}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                        <a href="tel:${c.phone}" class="text-xs font-extrabold text-slate-700 hover:text-sky-600 flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            <span>${c.phone}</span>
+                        </a>
+                        <button onclick="acceptCargo('${c.id}')" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-extrabold transition shadow-md shadow-sky-600/20">
+                            Yukni olish
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function acceptCargo(id) {
+            const c = cargoes.find(item => item.id === id);
+            if(c) {
+                c.status = 'accepted';
+                localStorage.setItem('yuk_cargoes_db', JSON.stringify(cargoes));
+                renderDriverCargoGrid();
+                renderClientCargoes();
+                showToast("Yuk qabul qilindi!", `${c.from} - ${c.to} yo'nalishi`);
+            }
+        }
+
+        function deleteCargo(id) {
+            cargoes = cargoes.filter(item => item.id !== id);
+            localStorage.setItem('yuk_cargoes_db', JSON.stringify(cargoes));
+            renderClientCargoes();
+            renderDriverCargoGrid();
+            showToast("E'lon o'chirildi", "");
+        }
+
+        function showToast(title, desc) {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastDesc').textContent = desc;
+
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>3
