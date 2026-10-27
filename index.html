@@ -248,7 +248,7 @@
                     Shofyor (Yuklar Bozori)
                 </button>
             </div>
-            <span class="text-xs font-bold text-sky-600 hidden sm:block pr-3">● Realtime Firebase Active</span>
+            <span class="text-xs font-bold text-sky-600 hidden sm:block pr-3">● Realtime Sync Active</span>
         </div>
 
         <!-- Kurator Section -->
@@ -526,7 +526,7 @@
 
     <script>
         window.currentUser = JSON.parse(localStorage.getItem('yuk_user')) || null;
-        window.globalCargoes = [];
+        window.globalCargoes = JSON.parse(localStorage.getItem('yuk_local_cargoes')) || [];
         let logoClicks = 0;
         let logoTimer = null;
         let tempRegData = {};
@@ -649,7 +649,6 @@
             document.getElementById('authStep1').classList.add('hidden');
             document.getElementById('authStep2').classList.remove('hidden');
 
-            // Start Camera for Face ID
             try {
                 cameraStream = await navigator.mediaDevices.getUserMedia({ video: { width: 300, height: 300 } });
                 const video = document.getElementById('faceCamera');
@@ -671,7 +670,7 @@
                 ctx.drawImage(video, 0, 0, 150, 150);
                 faceImage = canvas.toDataURL('image/png');
                 
-                cameraStream.getTracks().forEach(t => t.stop());
+                if (cameraStream) cameraStream.getTracks().forEach(t => t.stop());
             } else {
                 faceImage = 'https://i.postimg.cc/cJDdVcCZ/Isuzu-5-Tonna.png';
             }
@@ -740,6 +739,7 @@
             const phone = '+998 ' + document.getElementById('cargoPhone').value.trim();
 
             const newCargo = {
+                id: 'cg_' + Date.now(),
                 from, to, weight, price, priceType, truckType, phone,
                 author: window.currentUser.name,
                 authorFace: window.currentUser.faceImage || '',
@@ -747,11 +747,29 @@
                 createdAt: new Date().toISOString()
             };
 
-            const newRef = window.fbPush(window.fbRef(window.firebaseDB, 'cargoes'));
-            window.fbSet(newRef, newCargo).then(() => {
-                document.getElementById('cargoForm').reset();
-                showToast("E'lon Joylandi", `${from} ➔ ${to}`);
-            });
+            // Post to Firebase if available, or fallback to LocalStorage
+            if (window.fbPush && window.fbRef && window.firebaseDB) {
+                try {
+                    const newRef = window.fbPush(window.fbRef(window.firebaseDB, 'cargoes'));
+                    window.fbSet(newRef, newCargo);
+                } catch(err) {
+                    saveLocalCargo(newCargo);
+                }
+            } else {
+                saveLocalCargo(newCargo);
+            }
+
+            document.getElementById('cargoForm').reset();
+            if (window.currentUser) {
+                document.getElementById('cargoPhone').value = window.currentUser.phone.replace('+998 ', '');
+            }
+            showToast("E'lon Joylandi", `${from} ➔ ${to}`);
+            window.updateUI();
+        }
+
+        function saveLocalCargo(item) {
+            window.globalCargoes.unshift(item);
+            localStorage.setItem('yuk_local_cargoes', JSON.stringify(window.globalCargoes));
         }
 
         window.updateUI = function() {
@@ -849,7 +867,7 @@
             if (!list) return;
 
             if (window.globalCargoes.length === 0) {
-                list.innerHTML = `<div class="text-center text-xs text-slate-400 py-4">Firebase bazasida e'lonlar yo'q.</div>`;
+                list.innerHTML = `<div class="text-center text-xs text-slate-400 py-4">Bazada e'lonlar yo'q.</div>`;
                 return;
             }
 
@@ -868,15 +886,26 @@
         }
 
         function changeStatus(id, status) {
-            window.fbUpdate(window.fbRef(window.firebaseDB, `cargoes/${id}`), { status }).then(() => {
+            const item = window.globalCargoes.find(c => c.id === id);
+            if(item) {
+                item.status = status;
+                if (window.fbUpdate && window.fbRef && window.firebaseDB) {
+                    try { window.fbUpdate(window.fbRef(window.firebaseDB, `cargoes/${id}`), { status }); } catch(e){}
+                }
+                localStorage.setItem('yuk_local_cargoes', JSON.stringify(window.globalCargoes));
+                window.updateUI();
                 showToast("Yangilandi", "Yuk holati o'zgardi");
-            });
+            }
         }
 
         function deleteCargo(id) {
-            window.fbRemove(window.fbRef(window.firebaseDB, `cargoes/${id}`)).then(() => {
-                showToast("O'chirildi", "E'lon bazadan olib tashlandi");
-            });
+            window.globalCargoes = window.globalCargoes.filter(c => c.id !== id);
+            if (window.fbRemove && window.fbRef && window.firebaseDB) {
+                try { window.fbRemove(window.fbRef(window.firebaseDB, `cargoes/${id}`)); } catch(e){}
+            }
+            localStorage.setItem('yuk_local_cargoes', JSON.stringify(window.globalCargoes));
+            window.updateUI();
+            showToast("O'chirildi", "E'lon bazadan olib tashlandi");
         }
 
         function showToast(title, desc) {
@@ -889,6 +918,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             updateHeaderAuth();
+            window.updateUI();
         });
     </script>
 </body>
