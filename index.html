@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YukExpress - Firebase Integrated Logistics</title>
+    <title>YukExpress - Apple Silicon Freight Platform</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts Inter -->
@@ -14,9 +14,9 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        appleBlue: '#0284C7',
-                        appleDark: '#0F172A',
-                        appleGray: '#F8FAFC'
+                        appleBlue: '#007AFF',
+                        appleDark: '#1D1D1F',
+                        appleGray: '#F5F5F7'
                     }
                 }
             }
@@ -24,417 +24,407 @@
     </script>
     <style>
         * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
-        body { background-color: #FFFFFF; color: #0F172A; overflow-x: hidden; }
+        body { background-color: #FFFFFF; color: #1D1D1F; overflow-x: hidden; }
 
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(226, 232, 240, 0.9);
-            box-shadow: 0 10px 30px -5px rgba(2, 132, 199, 0.05);
+        .apple-glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(229, 229, 234, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
         }
 
-        .apple-bounce {
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        .apple-card {
+            background: #FFFFFF;
+            border: 1px solid #E5E5EA;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
         }
-        .apple-bounce:hover { transform: translateY(-2px); }
-        .apple-bounce:active { transform: translateY(0) scale(0.98); }
+
+        .apple-btn {
+            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .apple-btn:hover { transform: translateY(-1px); }
+        .apple-btn:active { transform: scale(0.98); }
 
         @keyframes scanLaser {
-            0% { top: 0%; opacity: 0.8; }
-            50% { top: 90%; opacity: 1; }
-            100% { top: 0%; opacity: 0.8; }
+            0% { top: 0%; opacity: 0.9; }
+            50% { top: 92%; opacity: 1; }
+            100% { top: 0%; opacity: 0.9; }
         }
         .laser-line { animation: scanLaser 1.8s infinite ease-in-out; }
 
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #F8FAFC; }
-        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
+        ::-webkit-scrollbar-track { background: #F5F5F7; }
+        ::-webkit-scrollbar-thumb { background: #C7C7CC; border-radius: 9999px; }
     </style>
 </head>
-<body class="h-full bg-white text-slate-900 flex flex-col selection:bg-sky-500 selection:text-white">
+<body class="h-full bg-white text-slate-900 flex flex-col selection:bg-blue-500 selection:text-white">
 
     <!-- Preloader -->
     <div id="preloader" class="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center transition-opacity duration-500">
         <div class="relative w-16 h-16 mb-4">
-            <div class="absolute inset-0 rounded-full border-4 border-sky-100 animate-pulse"></div>
-            <div class="absolute inset-0 rounded-full border-4 border-sky-600 border-t-transparent animate-spin"></div>
+            <div class="absolute inset-0 rounded-full border-4 border-slate-100 animate-pulse"></div>
+            <div class="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent animate-spin"></div>
         </div>
-        <div id="brandAssembly" class="text-2xl font-black text-slate-900">
-            <span class="text-sky-600">Yuk</span>Express
+        <div class="text-xl font-bold tracking-tight text-slate-900">
+            <span class="text-blue-600">Yuk</span>Express
         </div>
-        <p class="text-xs font-semibold text-slate-400 mt-1">Firebase Realtime Engine Ulanmoqda...</p>
+        <p class="text-xs text-slate-400 mt-1">Apple Silicon Engine Ulanmoqda...</p>
     </div>
 
-    <!-- HEADER / NAVIGATION -->
-    <header class="sticky top-0 z-30 glass-panel border-b border-slate-200 px-4 sm:px-8 py-3">
+    <!-- HEADER & NAVBAR (Home, About, Register, Logistics) -->
+    <header class="sticky top-0 z-30 apple-glass border-b border-slate-200 px-4 sm:px-8 py-3">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             
-            <!-- Secret 10 Click Logo for Admin Panel -->
-            <div onclick="handleLogoClick()" class="flex items-center gap-3 cursor-pointer select-none group" title="Admin panelga kirish uchun 10 marta bosing">
-                <div class="w-10 h-10 bg-sky-600 rounded-2xl flex items-center justify-center text-white font-black text-lg shadow-md shadow-sky-600/20 group-hover:scale-105 transition">
+            <!-- Logo (10 clicks = Secret Admin Panel) -->
+            <div onclick="handleLogoClick()" class="flex items-center gap-3 cursor-pointer select-none group" title="Admin Panel uchun 10 marta bosing">
+                <div class="w-10 h-10 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-sm group-hover:scale-105 transition">
                     Y
                 </div>
                 <div>
-                    <span class="text-base font-black text-slate-900 tracking-tight">YukExpress</span>
-                    <span class="block text-[9px] font-extrabold text-sky-600 uppercase tracking-widest">Realtime Platform</span>
+                    <span class="text-base font-bold text-slate-900 tracking-tight">YukExpress</span>
+                    <span class="block text-[9px] font-semibold text-blue-600 uppercase tracking-widest">Logistics Hub</span>
                 </div>
             </div>
 
-            <!-- Navigation Actions -->
+            <!-- Navbar Menu Items -->
+            <nav class="hidden md:flex items-center gap-1 bg-slate-100 p-1 rounded-2xl border border-slate-200">
+                <button onclick="switchNav('home')" id="navHome" class="px-4 py-2 rounded-xl text-xs font-bold transition bg-white text-slate-900 shadow-sm">Home</button>
+                <button onclick="switchNav('about')" id="navAbout" class="px-4 py-2 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900">About</button>
+                <button onclick="switchNav('logistics')" id="navLogistics" class="px-4 py-2 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900">Logistics</button>
+                <button onclick="openAuthModal()" id="navRegister" class="px-4 py-2 rounded-xl text-xs font-bold transition text-blue-600 hover:bg-blue-50">Register / Login</button>
+            </nav>
+
+            <!-- User Status / Auth Button -->
             <div class="flex items-center gap-3">
-                <button onclick="showSection('landing')" class="text-xs font-bold text-slate-600 hover:text-sky-600 px-3 py-2 transition">Bosh Sahifa</button>
-                
-                <div id="userNavSection" class="hidden flex items-center gap-3 pl-3 border-l border-slate-200">
-                    <div id="headerFaceAvatar" class="w-8 h-8 rounded-full bg-sky-100 border border-sky-300 overflow-hidden flex items-center justify-center text-xs">👤</div>
+                <div id="userHeaderInfo" class="hidden flex items-center gap-3 pl-3 border-l border-slate-200">
+                    <div id="userAvatarBadge" class="w-8 h-8 rounded-full bg-blue-100 border border-blue-300 flex items-center justify-center text-xs font-bold text-blue-600">👤</div>
                     <div class="text-right hidden sm:block">
-                        <p id="headerUserName" class="text-xs font-black text-slate-900"></p>
-                        <p id="headerUserRole" class="text-[10px] font-bold text-sky-600 uppercase"></p>
+                        <p id="headerUserName" class="text-xs font-bold text-slate-900"></p>
+                        <p id="headerUserRole" class="text-[10px] font-semibold text-blue-600 uppercase"></p>
                     </div>
                     <button onclick="logoutUser()" class="p-2 rounded-xl bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-600 transition" title="Chiqish">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
                     </button>
                 </div>
 
-                <button id="mainRegisterBtn" onclick="openAuthModal()" class="bg-sky-600 hover:bg-sky-700 text-white font-black text-xs px-5 py-2.5 rounded-2xl shadow-md shadow-sky-600/20 apple-bounce uppercase tracking-wider">
-                    Ro'yxatdan Kirish
+                <button id="headerRegBtn" onclick="openAuthModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-5 py-2.5 rounded-2xl shadow-md shadow-blue-600/20 apple-btn">
+                    Register
                 </button>
             </div>
 
         </div>
     </header>
 
-    <!-- SECTION 1: BOSH SAHIFA (LANDING PAGE & ABOUT) -->
-    <main id="sectionLanding" class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-8 space-y-12">
-        <!-- Hero Banner -->
-        <div class="glass-panel p-8 sm:p-12 rounded-[36px] border border-sky-100 bg-gradient-to-br from-sky-50/50 via-white to-white flex flex-col md:flex-row items-center justify-between gap-8">
+    <!-- MOBILE SUBNAV -->
+    <div class="md:hidden flex bg-slate-50 border-b border-slate-200 p-2 gap-1 overflow-x-auto">
+        <button onclick="switchNav('home')" class="flex-1 py-2 px-3 rounded-xl text-[11px] font-bold bg-white text-slate-900 shadow-sm whitespace-nowrap">Home</button>
+        <button onclick="switchNav('about')" class="flex-1 py-2 px-3 rounded-xl text-[11px] font-bold text-slate-600 whitespace-nowrap">About</button>
+        <button onclick="switchNav('logistics')" class="flex-1 py-2 px-3 rounded-xl text-[11px] font-bold text-slate-600 whitespace-nowrap">Logistics</button>
+        <button onclick="openAuthModal()" class="flex-1 py-2 px-3 rounded-xl text-[11px] font-bold text-blue-600 whitespace-nowrap">Register</button>
+    </div>
+
+    <!-- ================= VIEW 1: HOME (LANDING PAGE) ================= -->
+    <main id="viewHome" class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-8 space-y-12">
+        <!-- Hero Section -->
+        <div class="apple-card p-8 sm:p-12 rounded-[36px] bg-gradient-to-br from-blue-50/40 via-white to-white flex flex-col md:flex-row items-center justify-between gap-8">
             <div class="space-y-4 max-w-2xl text-center md:text-left">
-                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-xs font-black uppercase tracking-wider">
-                    ✦ O'zbekistondagi №1 Bepul Logistika Tizimi
-                </span>
-                <h1 class="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
-                    Yuklaringizni Tez va Xavfsiz Transportga Ulang
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                    O'zbekistondagi №1 Logistika Platformasi
+                </div>
+                <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                    Yuklaringizni Tez, Xavfsiz va Ishonchli Yetkazing
                 </h1>
                 <p class="text-sm sm:text-base font-medium text-slate-600 leading-relaxed">
-                    YukExpress platformasi orqali kuratorlar o'z yuklarini butunlay <b>bepul</b> e'lon qiladilar, shofyorlar esa O'zbekistonning 12 ta viloyatidan mos yukni topib real vaqt rejimida qabul qilishadi. Biometrik Face ID orqali barcha yuk va haydovchilar xavfsizligi kafolatlanadi.
+                    YukExpress yordamida kuratorlar o'z yuklarini butunlay bepul joylashadi, haydovchilar (shofyorlar) esa O'zbekistonning 12 ta viloyatidan mos yukni tanlab real vaqt rejimida qabul qilishadi. Biometrik Face ID xavfsizligi kafolatlangan.
                 </p>
                 <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
-                    <button onclick="openAuthModal()" class="bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs sm:text-sm px-7 py-3.5 rounded-2xl shadow-lg shadow-sky-600/30 apple-bounce uppercase tracking-wider">
-                        E'lon Berish yoki Yuk Olish ➔
+                    <button onclick="openAuthModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-2xl shadow-lg shadow-blue-600/25 apple-btn uppercase tracking-wider">
+                        Ro'yxatdan O'tish & Kirish ➔
+                    </button>
+                    <button onclick="switchNav('about')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs sm:text-sm px-6 py-3.5 rounded-2xl apple-btn">
+                        Platforma Haqida (About)
                     </button>
                 </div>
             </div>
 
-            <!-- Stats Card -->
+            <!-- Stats & Live Counter -->
             <div class="w-full md:w-80 space-y-3">
-                <div class="glass-panel p-5 rounded-3xl border border-slate-200">
-                    <p class="text-xs font-bold text-slate-400 uppercase">Faol Yuklar</p>
-                    <h3 id="landingCargoCount" class="text-2xl font-black text-sky-600">0 ta</h3>
+                <div class="apple-card p-5 rounded-3xl">
+                    <p class="text-xs font-bold text-slate-400 uppercase">Faol Yuklar Bazasi</p>
+                    <h3 id="statCargoCount" class="text-2xl font-black text-blue-600">0 ta</h3>
                 </div>
-                <div class="glass-panel p-5 rounded-3xl border border-slate-200">
-                    <p class="text-xs font-bold text-slate-400 uppercase">Viloyatlar Qamrovi</p>
+                <div class="apple-card p-5 rounded-3xl">
+                    <p class="text-xs font-bold text-slate-400 uppercase">Qamrov</p>
                     <h3 class="text-2xl font-black text-slate-900">12 ta Viloyat</h3>
                 </div>
-                <div class="glass-panel p-5 rounded-3xl border border-slate-200 flex items-center gap-3">
-                    <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center font-bold">✓</div>
+                <div class="apple-card p-5 rounded-3xl flex items-center gap-3">
+                    <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center font-bold">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                    </div>
                     <div>
-                        <p class="text-xs font-black text-slate-900">Face ID Xavfsizlik</p>
-                        <p class="text-[10px] text-slate-400">Har bir foydalanuvchi tasdiqlanadi</p>
+                        <p class="text-xs font-bold text-slate-900">Face ID Skaner</p>
+                        <p class="text-[10px] text-slate-400">Xavfsiz biometrik identifikatsiya</p>
                     </div>
                 </div>
             </div>
         </div>
+    </main>
 
-        <!-- About Platform Details -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="glass-panel p-6 rounded-[28px] border border-slate-200 space-y-2">
-                <div class="w-10 h-10 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center font-bold text-lg">📦</div>
-                <h3 class="text-base font-extrabold text-slate-900">Kuratorlar uchun Bepul</h3>
-                <p class="text-xs font-medium text-slate-500 leading-relaxed">
-                    Yuk beruvchilar hech qanday komissiyasiz va to'lovsiz o'z yuk e'lonlarini platformaga kiritadilar.
+    <!-- ================= VIEW 2: ABOUT (PLATFORM HAQIDA) ================= -->
+    <main id="viewAbout" class="hidden flex-1 max-w-7xl w-full mx-auto p-4 sm:p-8 space-y-8">
+        <div class="apple-card p-8 sm:p-12 rounded-[36px] space-y-6">
+            <div class="max-w-3xl space-y-3">
+                <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">About YukExpress</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    Logistika sohasida yangi raqamli standart
+                </h2>
+                <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                    YukExpress — bu O'zbekiston ichidagi yuk egalari (kuratorlar) va professional haydovchilarni (shofyorlarni) vositachilarsiz to'g'ridan-to'g'ri bog'laydigan zamonaviy web platforma. Apple UI/UX standartlari asosida yaratilgan tizimimiz yuqori tezlik va qulaylikni ta'minlaydi.
                 </p>
             </div>
-            <div class="glass-panel p-6 rounded-[28px] border border-slate-200 space-y-2">
-                <div class="w-10 h-10 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center font-bold text-lg">🚛</div>
-                <h3 class="text-base font-extrabold text-slate-900">Shofyorlar uchun Qulay</h3>
-                <p class="text-xs font-medium text-slate-500 leading-relaxed">
-                    O'zbekiston ichidagi barcha tayyor yuklar bazasidan avtomobilingizga mosini tez va oson tanlaysiz.
-                </p>
-            </div>
-            <div class="glass-panel p-6 rounded-[28px] border border-slate-200 space-y-2">
-                <div class="w-10 h-10 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center font-bold text-lg">🔒</div>
-                <h3 class="text-base font-extrabold text-slate-900">Dispetcher va Xavfsizlik</h3>
-                <p class="text-xs font-medium text-slate-500 leading-relaxed">
-                    Nizo yoki xatolik yuz berganda dispetcher tugmasi orqali yuk holatini darhol tiklash va qayta aktiv qilish imkoni bor.
-                </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+                <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200 space-y-3">
+                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900">Kuratorlar Uchun</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Yukingizni istalgan viloyatga bepul e'lon qiling, narx turini belgilang va ishonchli shofyor bilan tezda bog'laning.</p>
+                </div>
+                <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200 space-y-3">
+                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900">Shofyorlar Uchun</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Bo'sh turmang! O'zbekiston bo'ylab barcha bo'sh yuklar bozoridan o'z mashinangizga mosini tanlab oling.</p>
+                </div>
+                <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200 space-y-3">
+                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900">Face ID Xavfsizlik</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Tizimga kirishda yuzni skanerlash va telefon raqamni tasdiqlash orqali firibgarlikning oldi olinadi.</p>
+                </div>
             </div>
         </div>
     </main>
 
-    <!-- SECTION 2: PLATFORM DASHBOARD (KURATOR & SHOFYOR) -->
-    <main id="sectionDashboard" class="hidden flex-1 max-w-7xl w-full mx-auto p-4 sm:p-8 space-y-6">
-        
-        <!-- Role Tabs Switcher -->
-        <div class="flex items-center justify-between glass-panel p-2 rounded-2xl border border-slate-200">
+    <!-- ================= VIEW 3: LOGISTICS (DASHBOARD) ================= -->
+    <main id="viewLogistics" class="hidden flex-1 max-w-7xl w-full mx-auto p-4 sm:p-8 space-y-6">
+        <div class="flex items-center justify-between apple-card p-3 rounded-2xl">
             <div class="flex gap-2">
-                <button onclick="switchTab('client')" id="tabBtnClient" class="px-5 py-2.5 rounded-xl text-xs font-black transition bg-sky-600 text-white shadow-sm">
-                    Kurator (E'lon Bepul Joylash)
+                <button onclick="switchLogisticsTab('client')" id="tabClient" class="px-5 py-2.5 rounded-xl text-xs font-bold transition bg-blue-600 text-white shadow-sm">
+                    Kurator (Yuk E'lon Qilish)
                 </button>
-                <button onclick="switchTab('driver')" id="tabBtnDriver" class="px-5 py-2.5 rounded-xl text-xs font-black transition text-slate-600 hover:text-slate-900">
+                <button onclick="switchLogisticsTab('driver')" id="tabDriver" class="px-5 py-2.5 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900">
                     Shofyor (Yuklar Bozori)
                 </button>
             </div>
-            <span class="text-xs font-extrabold text-sky-600 hidden sm:block pr-3">● Realtime Firebase Sync Active</span>
+            <span class="text-xs font-bold text-blue-600 hidden sm:block pr-3">● Realtime Firebase Active</span>
         </div>
 
-        <!-- KURATOR SECTION -->
-        <section id="subSectionClient" class="space-y-6">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                
-                <!-- Create Cargo Form -->
-                <div class="lg:col-span-5 glass-panel p-6 rounded-[32px] border border-slate-200 h-fit">
-                    <h2 class="text-base font-black text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center justify-between">
-                        <span>Yangi Yuk E'lon Qilish</span>
-                        <span class="text-[10px] font-bold bg-sky-50 text-sky-600 px-2.5 py-1 rounded-lg">BEPUL</span>
-                    </h2>
+        <!-- Kurator Section -->
+        <section id="logisticsClient" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-5 apple-card p-6 rounded-[32px] h-fit space-y-4">
+                <h2 class="text-sm font-extrabold text-slate-900 pb-3 border-b border-slate-100 flex justify-between items-center">
+                    <span>Yangi Yuk E'loni</span>
+                    <span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-2.5 py-1 rounded-lg">BEPUL</span>
+                </h2>
 
-                    <form id="createCargoForm" onsubmit="handlePostCargo(event)" class="space-y-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Jo'nash Viloyati *</label>
-                                <select id="formFrom" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none bg-white">
-                                    <option value="">Tanlang</option>
-                                    <option value="Toshkent">Toshkent</option>
-                                    <option value="Jizzax">Jizzax</option>
-                                    <option value="Samarqand">Samarqand</option>
-                                    <option value="Farg'ona">Farg'ona</option>
-                                    <option value="Andijon">Andijon</option>
-                                    <option value="Namangan">Namangan</option>
-                                    <option value="Buxoro">Buxoro</option>
-                                    <option value="Navoiy">Navoiy</option>
-                                    <option value="Qashqadaryo">Qashqadaryo</option>
-                                    <option value="Surxondaryo">Surxondaryo</option>
-                                    <option value="Xorazm">Xorazm</option>
-                                    <option value="Qoraqalpog'iston">Qoraqalpog'iston</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Borish Viloyati *</label>
-                                <select id="formTo" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none bg-white">
-                                    <option value="">Tanlang</option>
-                                    <option value="Toshkent">Toshkent</option>
-                                    <option value="Jizzax">Jizzax</option>
-                                    <option value="Samarqand">Samarqand</option>
-                                    <option value="Farg'ona">Farg'ona</option>
-                                    <option value="Andijon">Andijon</option>
-                                    <option value="Namangan">Namangan</option>
-                                    <option value="Buxoro">Buxoro</option>
-                                    <option value="Navoiy">Navoiy</option>
-                                    <option value="Qashqadaryo">Qashqadaryo</option>
-                                    <option value="Surxondaryo">Surxondaryo</option>
-                                    <option value="Xorazm">Xorazm</option>
-                                    <option value="Qoraqalpog'iston">Qoraqalpog'iston</option>
-                                </select>
-                            </div>
-                        </div>
-
+                <form id="cargoForm" onsubmit="handlePostCargo(event)" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Yuk Tavsifi / Og'irligi *</label>
-                            <input type="text" id="formWeight" required placeholder="Masalan: Mevalar / 10 Tonna" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none">
+                            <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Jo'nash Viloyati *</label>
+                            <select id="cargoFrom" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none bg-white">
+                                <option value="">Tanlang</option>
+                                <option value="Toshkent">Toshkent</option>
+                                <option value="Jizzax">Jizzax</option>
+                                <option value="Samarqand">Samarqand</option>
+                                <option value="Farg'ona">Farg'ona</option>
+                                <option value="Andijon">Andijon</option>
+                                <option value="Namangan">Namangan</option>
+                                <option value="Buxoro">Buxoro</option>
+                                <option value="Navoiy">Navoiy</option>
+                                <option value="Qashqadaryo">Qashqadaryo</option>
+                                <option value="Surxondaryo">Surxondaryo</option>
+                                <option value="Xorazm">Xorazm</option>
+                                <option value="Qoraqalpog'iston">Qoraqalpog'iston</option>
+                            </select>
                         </div>
-
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">To'lov Turi</label>
-                                <select id="formPriceType" onchange="handlePriceTypeChange(this.value)" class="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none">
-                                    <option value="fixed">Aniq Narx (UZS)</option>
-                                    <option value="negotiable">Kelishuv asosida</option>
-                                </select>
-                            </div>
-                            <div id="priceWrapper">
-                                <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Summa (UZS)</label>
-                                <input type="number" id="formPrice" placeholder="4000000" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none">
-                            </div>
-                        </div>
-
                         <div>
-                            <div class="flex justify-between items-center mb-1">
-                                <label class="block text-[10px] font-black text-slate-600 uppercase">Transport Turi *</label>
-                                <button type="button" onclick="openCustomVehicleModal()" class="text-[10px] font-bold text-sky-600 hover:underline">+ Yangi Mashina Qo'shish</button>
-                            </div>
-                            <select id="formTruckType" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none"></select>
+                            <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Borish Viloyati *</label>
+                            <select id="cargoTo" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none bg-white">
+                                <option value="">Tanlang</option>
+                                <option value="Toshkent">Toshkent</option>
+                                <option value="Jizzax">Jizzax</option>
+                                <option value="Samarqand">Samarqand</option>
+                                <option value="Farg'ona">Farg'ona</option>
+                                <option value="Andijon">Andijon</option>
+                                <option value="Namangan">Namangan</option>
+                                <option value="Buxoro">Buxoro</option>
+                                <option value="Navoiy">Navoiy</option>
+                                <option value="Qashqadaryo">Qashqadaryo</option>
+                                <option value="Surxondaryo">Surxondaryo</option>
+                                <option value="Xorazm">Xorazm</option>
+                                <option value="Qoraqalpog'iston">Qoraqalpog'iston</option>
+                            </select>
                         </div>
+                    </div>
 
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Yuk Tavsifi / Hajmi *</label>
+                        <input type="text" id="cargoWeight" required placeholder="Masalan: Qutilar / 5 Tonna" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Aloqa Telefon *</label>
-                            <input type="tel" id="formPhone" required placeholder="+998 (90) 123-45-67" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none">
+                            <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">To'lov Turi</label>
+                            <select id="cargoPriceType" onchange="handlePriceTypeChange(this.value)" class="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none bg-white">
+                                <option value="fixed">Aniq Narx (UZS)</option>
+                                <option value="negotiable">Kelishuv asosida</option>
+                            </select>
                         </div>
+                        <div id="cargoPriceWrapper">
+                            <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Summa (UZS)</label>
+                            <input type="number" id="cargoPrice" placeholder="3000000" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none">
+                        </div>
+                    </div>
 
-                        <button type="submit" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-black py-3 rounded-2xl shadow-lg shadow-sky-600/20 apple-bounce text-xs uppercase tracking-wider">
-                            Firebase Bazaga E'lon Qilish
-                        </button>
-                    </form>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Transport Turi *</label>
+                        <select id="cargoTruck" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none bg-white">
+                            <option value="Isuzu 5 Tonna">Isuzu 5 Tonna</option>
+                            <option value="Isuzu 10 Tonna">Isuzu 10 Tonna</option>
+                            <option value="Tent 15 Tonna">Tent 15 Tonna</option>
+                            <option value="Fura 24 Tonna">Fura 24 Tonna</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Aloqa Telefon *</label>
+                        <input type="tel" id="cargoPhone" required placeholder="+998 (90) 123-45-67" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none">
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-2xl shadow-md shadow-blue-600/20 apple-btn text-xs uppercase tracking-wider">
+                        E'lonni Joylash
+                    </button>
+                </form>
+            </div>
+
+            <div class="lg:col-span-7 space-y-4">
+                <div class="apple-card p-4 rounded-2xl flex justify-between items-center">
+                    <h3 class="text-xs font-extrabold text-slate-900">Mening E'lonlarim</h3>
+                    <span id="myCargoCountBadge" class="text-xs font-bold bg-blue-50 text-blue-600 px-3 py-1 rounded-xl">0 ta</span>
                 </div>
-
-                <!-- Kurator's Active Listings -->
-                <div class="lg:col-span-7 space-y-4">
-                    <h2 class="text-sm font-black text-slate-900 glass-panel p-4 rounded-2xl border border-slate-200 flex justify-between items-center">
-                        <span>Mening E'lonlarim</span>
-                        <span id="myListingsCount" class="text-xs font-bold bg-sky-50 text-sky-600 px-3 py-1 rounded-xl">0 ta</span>
-                    </h2>
-                    <div id="clientCargoContainer" class="space-y-3"></div>
-                </div>
-
+                <div id="clientCargoList" class="space-y-3"></div>
             </div>
         </section>
 
-        <!-- SHOFYOR SECTION -->
-        <section id="subSectionDriver" class="hidden space-y-6">
-            <!-- Filter Bar -->
-            <div class="glass-panel p-4 rounded-2xl border border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <!-- Shofyor Section -->
+        <section id="logisticsDriver" class="hidden space-y-6">
+            <div class="apple-card p-4 rounded-2xl grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Qayerdan</label>
-                    <input type="text" id="filterFrom" oninput="renderDriverFeed()" placeholder="Barcha viloyatlar" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold outline-none">
+                    <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Qayerdan</label>
+                    <input type="text" id="filterFrom" oninput="renderDriverFeed()" placeholder="Barchasi" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold outline-none">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Qayerga</label>
-                    <input type="text" id="filterTo" oninput="renderDriverFeed()" placeholder="Barcha viloyatlar" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold outline-none">
+                    <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Qayerga</label>
+                    <input type="text" id="filterTo" oninput="renderDriverFeed()" placeholder="Barchasi" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold outline-none">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Transport Turi</label>
-                    <select id="filterTruck" onchange="renderDriverFeed()" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold outline-none">
+                    <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Transport Turi</label>
+                    <select id="filterTruck" onchange="renderDriverFeed()" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-bold outline-none bg-white">
                         <option value="">Barchasi</option>
+                        <option value="Isuzu 5 Tonna">Isuzu 5 Tonna</option>
+                        <option value="Isuzu 10 Tonna">Isuzu 10 Tonna</option>
+                        <option value="Tent 15 Tonna">Tent 15 Tonna</option>
+                        <option value="Fura 24 Tonna">Fura 24 Tonna</option>
                     </select>
                 </div>
             </div>
 
-            <!-- Driver Cargo Feed Grid -->
             <div id="driverCargoGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
         </section>
-
     </main>
 
-    <!-- SECTION 3: SECRET ADMIN PANEL -->
-    <main id="sectionAdmin" class="hidden flex-1 max-w-7xl w-full mx-auto p-4 sm:p-8 space-y-6">
-        <div class="glass-panel p-6 rounded-[32px] border border-rose-200 bg-rose-50/20 flex items-center justify-between">
+    <!-- ================= VIEW 4: ADMIN PANEL (10 Clicks on Logo) ================= -->
+    <main id="viewAdmin" class="hidden flex-1 max-w-7xl w-full mx-auto p-4 sm:p-8 space-y-6">
+        <div class="apple-card p-6 rounded-[32px] border border-rose-200 bg-rose-50/30 flex items-center justify-between">
             <div>
-                <span class="px-3 py-1 rounded-full bg-rose-600 text-white text-[10px] font-black uppercase tracking-wider">
-                    👑 Tizim Boshqaruvi (Admin Mode)
-                </span>
-                <h2 class="text-xl font-black text-slate-900 mt-2">YukExpress Markaziy Admin Paneli</h2>
-                <p class="text-xs font-semibold text-slate-500">Firebase o'zgarishlarini nazorat qilish va e'lonlarni boshqarish</p>
+                <span class="px-3 py-1 rounded-full bg-rose-600 text-white text-[10px] font-bold uppercase tracking-wider">Admin Panel</span>
+                <h2 class="text-xl font-extrabold text-slate-900 mt-2">Barcha E'lonlar Boshqaruvi</h2>
+                <p class="text-xs text-slate-500">Nizo yoki xatolik chiqqanda e'lonlarni o'chirish yoki aktivlashtirish</p>
             </div>
-            <button onclick="showSection('dashboard')" class="px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold apple-bounce">
-                Admin paneldan chiqish
-            </button>
+            <button onclick="switchNav('home')" class="px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold apple-btn">Chiqish</button>
         </div>
-
-        <!-- Admin Stats & Management Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div class="lg:col-span-12 glass-panel p-6 rounded-[32px] border border-slate-200 space-y-4">
-                <h3 class="text-sm font-black text-slate-900">Barcha Yuklar Bazasini Boshqarish (O'chirish / Bekor Qilish)</h3>
-                <div id="adminCargoList" class="space-y-3"></div>
-            </div>
-        </div>
+        <div id="adminCargoList" class="space-y-3"></div>
     </main>
 
-    <!-- AUTHENTICATION & FACE ID MODAL -->
+    <!-- ================= MODAL: AUTHENTICATION & FACE ID ================= -->
     <div id="authModal" class="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-        <div class="w-full max-w-md glass-panel p-6 sm:p-8 rounded-[36px] shadow-2xl border border-slate-200 animate-spring">
-            <div class="text-center mb-6">
-                <div class="w-12 h-12 bg-sky-50 text-sky-600 rounded-2xl mx-auto flex items-center justify-center mb-2 font-black text-xl">
-                    🛡️
+        <div class="w-full max-w-md apple-card p-6 sm:p-8 rounded-[36px] shadow-2xl space-y-4">
+            <div class="text-center">
+                <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl mx-auto flex items-center justify-center mb-2 font-bold text-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.115 6.845l.209-.374m-5.59-1.921A13.938 13.938 0 0112 11v0a4 4 0 118 0c0 1.017-.07 2.019-.203 3"/></svg>
                 </div>
-                <h2 class="text-lg font-black text-slate-900">YukExpress Kirish & Face ID</h2>
-                <p class="text-xs font-semibold text-slate-400">Yuzingiz va telefon raqamingizni tasdiqlang</p>
+                <h3 class="text-base font-extrabold text-slate-900">Face ID & Ro'yxatdan O'tish</h3>
+                <p class="text-xs text-slate-500">Ism va telefon raqamingizni kiritib yuzingizni skanerlang</p>
             </div>
 
-            <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-4">
-                <div class="grid grid-cols-2 gap-3">
-                    <button type="button" onclick="setAuthRole('kurator')" id="roleBtnKurator" class="py-2.5 rounded-xl font-black text-xs bg-sky-600 text-white">Kurator</button>
-                    <button type="button" onclick="setAuthRole('shofyor')" id="roleBtnShofyor" class="py-2.5 rounded-xl font-black text-xs bg-slate-100 text-slate-600">Shofyor</button>
+            <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-3">
+                <div class="grid grid-cols-2 gap-2">
+                    <button type="button" onclick="setAuthRole('kurator')" id="roleKuratorBtn" class="py-2.5 rounded-xl font-bold text-xs bg-blue-600 text-white shadow-sm">Kurator</button>
+                    <button type="button" onclick="setAuthRole('shofyor')" id="roleShofyorBtn" class="py-2.5 rounded-xl font-bold text-xs bg-slate-100 text-slate-600">Shofyor</button>
                 </div>
                 <input type="hidden" id="authRoleInput" value="kurator">
 
                 <div>
-                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Ism va Familiya *</label>
-                    <input type="text" id="authName" required placeholder="Anvar Karimov" class="w-full px-4 py-3 rounded-2xl border border-slate-200 text-xs font-bold outline-none">
+                    <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Ism va Familiya *</label>
+                    <input type="text" id="authName" required placeholder="Anvar Karimov" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none">
                 </div>
 
                 <div>
-                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">O'zbekiston Telefon *</label>
-                    <div class="flex items-center rounded-2xl border border-slate-200 overflow-hidden">
-                        <span class="px-3 py-3 text-xs font-black text-sky-600 bg-sky-50 border-r border-slate-200">+998</span>
-                        <input type="tel" id="authPhone" required placeholder="(90) 123-45-67" class="flex-1 px-3 py-3 text-xs font-bold outline-none">
+                    <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Telefon Raqam *</label>
+                    <div class="flex items-center rounded-xl border border-slate-200 overflow-hidden">
+                        <span class="px-3 py-2.5 text-xs font-bold text-blue-600 bg-blue-50 border-r border-slate-200">+998</span>
+                        <input type="tel" id="authPhone" required placeholder="(90) 123-45-67" class="flex-1 px-3 py-2.5 text-xs font-bold outline-none">
                     </div>
                 </div>
 
-                <!-- Face Scanner -->
+                <!-- Face Scanner Simulation Box -->
                 <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-center">
-                    <div class="w-20 h-24 mx-auto rounded-[30px] border-2 border-sky-500 bg-white relative overflow-hidden flex items-center justify-center">
-                        <div class="absolute inset-0 bg-sky-50/50"></div>
-                        <div class="absolute left-0 right-0 h-0.5 bg-sky-500 laser-line"></div>
-                        <span id="faceStatusIcon" class="text-3xl">👤</span>
+                    <div class="w-16 h-20 mx-auto rounded-3xl border-2 border-blue-500 bg-white relative overflow-hidden flex items-center justify-center">
+                        <div class="absolute inset-0 bg-blue-50/40"></div>
+                        <div class="absolute left-0 right-0 h-0.5 bg-blue-500 laser-line"></div>
+                        <span id="faceIcon" class="text-2xl">👤</span>
                     </div>
-                    <p id="faceStatusText" class="text-[10px] font-bold text-slate-600 mt-2">Face ID Tayyor</p>
+                    <p id="faceText" class="text-[10px] font-bold text-slate-600 mt-2">Face ID Tayyor</p>
                 </div>
 
-                <div class="flex gap-2">
-                    <button type="button" onclick="closeAuthModal()" class="flex-1 bg-slate-100 text-slate-600 font-bold py-3 rounded-2xl text-xs">Yopish</button>
-                    <button type="submit" class="flex-1 bg-sky-600 hover:bg-sky-700 text-white font-black py-3 rounded-2xl shadow-lg shadow-sky-600/20 text-xs uppercase tracking-wider apple-bounce">Kirish</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- CUSTOM VEHICLE MODAL -->
-    <div id="customVehicleModal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-        <div class="glass-panel w-full max-w-sm p-6 rounded-[32px] border border-slate-200">
-            <h3 class="text-sm font-black text-slate-900 mb-3">Yangi Mashina Turini Qo'shish</h3>
-            <form onsubmit="handleSaveCustomVehicle(event)" class="space-y-3">
-                <input type="text" id="customTruckName" required placeholder="Mashina nomi (Masalan: MAN Refrigerator)" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none">
-                <input type="text" id="customTruckCapacity" required placeholder="Sig'imi (Masalan: 20 Tonna)" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none">
-                <div class="flex gap-2 pt-2">
-                    <button type="button" onclick="closeCustomVehicleModal()" class="flex-1 bg-slate-100 text-slate-600 font-bold py-2 rounded-xl text-xs">Bekor qilish</button>
-                    <button type="submit" class="flex-1 bg-sky-600 text-white font-black py-2 rounded-xl text-xs shadow-md shadow-sky-600/20">Saqlash</button>
+                <div class="flex gap-2 pt-1">
+                    <button type="button" onclick="closeAuthModal()" class="flex-1 bg-slate-100 text-slate-600 font-bold py-2.5 rounded-xl text-xs">Yopish</button>
+                    <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md shadow-blue-600/20 apple-btn">Tasdiqlash</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- CALL & ACCEPT SIMULATION MODAL -->
-    <div id="callModal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-        <div class="glass-panel w-full max-w-sm p-6 rounded-[32px] border border-slate-200 text-center space-y-4">
-            <div class="w-16 h-16 bg-sky-50 text-sky-600 rounded-full mx-auto flex items-center justify-center text-2xl font-bold animate-pulse">📞</div>
-            <div>
-                <h3 class="text-sm font-black text-slate-900">Kurator bilan Bog'lanilmoqda</h3>
-                <p id="callPhoneText" class="text-xs font-bold text-sky-600 mt-1"></p>
-            </div>
-            <div class="p-3 bg-slate-50 rounded-2xl text-[11px] font-semibold text-slate-500">
-                Akkreditatsiyalangan audio aloqa yozib olinmoqda...
-            </div>
-            <div class="flex gap-2">
-                <button onclick="closeCallModal()" class="flex-1 bg-slate-100 text-slate-600 font-bold py-2.5 rounded-xl text-xs">Yopish</button>
-                <button id="confirmAcceptBtn" onclick="" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 rounded-xl text-xs shadow-md shadow-emerald-600/20">Yukni Qabul Qildim</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Banner -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 glass-panel px-5 py-3 rounded-2xl border border-slate-200 shadow-xl transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-3">
-        <div class="w-7 h-7 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-xs" id="toastIcon">✓</div>
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 apple-card px-5 py-3 rounded-2xl shadow-xl transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-3">
+        <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">✓</div>
         <div>
-            <p id="toastTitle" class="text-xs font-black text-slate-900"></p>
-            <p id="toastDesc" class="text-[10px] font-semibold text-slate-500"></p>
+            <p id="toastTitle" class="text-xs font-bold text-slate-900"></p>
+            <p id="toastDesc" class="text-[10px] text-slate-500"></p>
         </div>
     </div>
 
-    <!-- FIREBASE SDK INCLUSION (MODERN MODULE SYSTEM) -->
+    <!-- FIREBASE SDK & APP LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, push, set, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Your Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAf_Gm6P2sERbOfM4PTrEWjnULcY_DwDWI",
             authDomain: "yukexpress-a2e41.firebaseapp.com",
@@ -446,11 +436,9 @@
             databaseURL: "https://yukexpress-a2e41-default-rtdb.firebaseio.com"
         };
 
-        // Initialize Firebase Realtime Database
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // Global States & References
         window.firebaseDB = db;
         window.fbRef = ref;
         window.fbPush = push;
@@ -458,9 +446,8 @@
         window.fbRemove = remove;
         window.fbUpdate = update;
 
-        // Firebase Sync Listeners
-        const cargoesRef = ref(db, 'cargoes');
-        onValue(cargoesRef, (snapshot) => {
+        // Realtime sync
+        onValue(ref(db, 'cargoes'), (snapshot) => {
             const data = snapshot.val();
             window.globalCargoes = [];
             if (data) {
@@ -470,121 +457,106 @@
             }
             window.globalCargoes.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
             
-            // Update UI components automatically
-            if (window.renderLandingCount) window.renderLandingCount();
-            if (window.renderClientCargoes) window.renderClientCargoes();
-            if (window.renderDriverFeed) window.renderDriverFeed();
-            if (window.renderAdminCargoList) window.renderAdminCargoList();
+            if (window.updateUI) window.updateUI();
         });
 
-        const vehiclesRef = ref(db, 'vehicles');
-        onValue(vehiclesRef, (snapshot) => {
-            const data = snapshot.val();
-            window.globalVehicles = [
-                { id: 'v1', name: 'Isuzu 5 Tonna', capacity: '5 Tonna' },
-                { id: 'v2', name: 'Isuzu 10 Tonna', capacity: '10 Tonna' },
-                { id: 'v3', name: 'Tent 15 Tonna', capacity: '15 Tonna' },
-                { id: 'v4', name: 'Fura 24 Tonna', capacity: '24 Tonna' }
-            ];
-            if (data) {
-                Object.keys(data).forEach(key => {
-                    window.globalVehicles.push({ id: key, ...data[key] });
-                });
-            }
-            if (window.renderVehicleDropdowns) window.renderVehicleDropdowns();
-        });
-
-        // Preloader dismiss
         setTimeout(() => {
             const preloader = document.getElementById('preloader');
             if (preloader) {
                 preloader.style.opacity = '0';
-                setTimeout(() => preloader.remove(), 500);
+                setTimeout(() => preloader.remove(), 400);
             }
-        }, 800);
+        }, 600);
     </script>
 
-    <!-- MAIN APP JAVASCRIPT LOGIC -->
     <script>
-        window.currentUser = JSON.parse(localStorage.getItem('yuk_express_user')) || null;
+        window.currentUser = JSON.parse(localStorage.getItem('yuk_user')) || null;
         window.globalCargoes = [];
-        window.globalVehicles = [];
-        let logoClickCounter = 0;
-        let logoClickTimer = null;
+        let logoClicks = 0;
+        let logoTimer = null;
 
-        // SECRET 10 CLICK LOGO FOR ADMIN PANEL
         function handleLogoClick() {
-            logoClickCounter++;
-            clearTimeout(logoClickTimer);
-            if (logoClickCounter >= 10) {
-                logoClickCounter = 0;
-                showToast("Admin Panel", "Maxfiy admin paneli ochildi!");
-                showSection('admin');
+            logoClicks++;
+            clearTimeout(logoTimer);
+            if (logoClicks >= 10) {
+                logoClicks = 0;
+                switchNav('admin');
+                showToast("Admin Panel", "Maxfiy admin paneli ochildi");
             } else {
-                logoClickTimer = setTimeout(() => { logoClickCounter = 0; }, 3000);
+                logoTimer = setTimeout(() => { logoClicks = 0; }, 3000);
             }
         }
 
-        // NAVIGATION CONTROL
-        function showSection(sec) {
-            document.getElementById('sectionLanding').classList.add('hidden');
-            document.getElementById('sectionDashboard').classList.add('hidden');
-            document.getElementById('sectionAdmin').classList.add('hidden');
+        // NAVIGATION HANDLER (Home, About, Logistics, Admin)
+        function switchNav(view) {
+            document.getElementById('viewHome').classList.add('hidden');
+            document.getElementById('viewAbout').classList.add('hidden');
+            document.getElementById('viewLogistics').classList.add('hidden');
+            document.getElementById('viewAdmin').classList.add('hidden');
 
-            if (sec === 'landing') {
-                document.getElementById('sectionLanding').classList.remove('hidden');
-            } else if (sec === 'dashboard') {
+            // Nav active states
+            ['navHome', 'navAbout', 'navLogistics'].forEach(id => {
+                const el = document.getElementById(id);
+                if(el) {
+                    el.className = "px-4 py-2 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900";
+                }
+            });
+
+            if (view === 'home') {
+                document.getElementById('viewHome').classList.remove('hidden');
+                document.getElementById('navHome').className = "px-4 py-2 rounded-xl text-xs font-bold transition bg-white text-slate-900 shadow-sm";
+            } else if (view === 'about') {
+                document.getElementById('viewAbout').classList.remove('hidden');
+                document.getElementById('navAbout').className = "px-4 py-2 rounded-xl text-xs font-bold transition bg-white text-slate-900 shadow-sm";
+            } else if (view === 'logistics') {
                 if (!window.currentUser) {
                     openAuthModal();
                     return;
                 }
-                document.getElementById('sectionDashboard').classList.remove('hidden');
-                switchTab(window.currentUser.role === 'shofyor' ? 'driver' : 'client');
-            } else if (sec === 'admin') {
-                document.getElementById('sectionAdmin').classList.remove('hidden');
-                renderAdminCargoList();
+                document.getElementById('viewLogistics').classList.remove('hidden');
+                document.getElementById('navLogistics').className = "px-4 py-2 rounded-xl text-xs font-bold transition bg-white text-slate-900 shadow-sm";
+                switchLogisticsTab(window.currentUser.role === 'shofyor' ? 'driver' : 'client');
+            } else if (view === 'admin') {
+                document.getElementById('viewAdmin').classList.remove('hidden');
+                renderAdminList();
             }
         }
 
-        function switchTab(tab) {
-            const secClient = document.getElementById('subSectionClient');
-            const secDriver = document.getElementById('subSectionDriver');
-            const btnClient = document.getElementById('tabBtnClient');
-            const btnDriver = document.getElementById('tabBtnDriver');
+        function switchLogisticsTab(tab) {
+            const sClient = document.getElementById('logisticsClient');
+            const sDriver = document.getElementById('logisticsDriver');
+            const bClient = document.getElementById('tabClient');
+            const bDriver = document.getElementById('tabDriver');
 
             if (tab === 'client') {
-                secClient.classList.remove('hidden');
-                secDriver.classList.add('hidden');
-                btnClient.className = "px-5 py-2.5 rounded-xl text-xs font-black transition bg-sky-600 text-white shadow-sm";
-                btnDriver.className = "px-5 py-2.5 rounded-xl text-xs font-black transition text-slate-600 hover:text-slate-900";
-                renderClientCargoes();
+                sClient.classList.remove('hidden');
+                sDriver.classList.add('hidden');
+                bClient.className = "px-5 py-2.5 rounded-xl text-xs font-bold transition bg-blue-600 text-white shadow-sm";
+                bDriver.className = "px-5 py-2.5 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900";
+                renderClientList();
             } else {
-                secDriver.classList.remove('hidden');
-                secClient.classList.add('hidden');
-                btnDriver.className = "px-5 py-2.5 rounded-xl text-xs font-black transition bg-sky-600 text-white shadow-sm";
-                btnClient.className = "px-5 py-2.5 rounded-xl text-xs font-black transition text-slate-600 hover:text-slate-900";
+                sDriver.classList.remove('hidden');
+                sClient.classList.add('hidden');
+                bDriver.className = "px-5 py-2.5 rounded-xl text-xs font-bold transition bg-blue-600 text-white shadow-sm";
+                bClient.className = "px-5 py-2.5 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900";
                 renderDriverFeed();
             }
         }
 
-        // AUTH & FACE ID MODAL HANDLERS
-        function openAuthModal() {
-            document.getElementById('authModal').classList.remove('hidden');
-        }
-        function closeAuthModal() {
-            document.getElementById('authModal').classList.add('hidden');
-        }
+        // AUTH MODAL & FACE ID
+        function openAuthModal() { document.getElementById('authModal').classList.remove('hidden'); }
+        function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
 
         function setAuthRole(role) {
             document.getElementById('authRoleInput').value = role;
-            const bK = document.getElementById('roleBtnKurator');
-            const bS = document.getElementById('roleBtnShofyor');
+            const bK = document.getElementById('roleKuratorBtn');
+            const bS = document.getElementById('roleShofyorBtn');
             if (role === 'kurator') {
-                bK.className = "py-2.5 rounded-xl font-black text-xs bg-sky-600 text-white";
-                bS.className = "py-2.5 rounded-xl font-black text-xs bg-slate-100 text-slate-600";
+                bK.className = "py-2.5 rounded-xl font-bold text-xs bg-blue-600 text-white shadow-sm";
+                bS.className = "py-2.5 rounded-xl font-bold text-xs bg-slate-100 text-slate-600";
             } else {
-                bS.className = "py-2.5 rounded-xl font-black text-xs bg-sky-600 text-white";
-                bK.className = "py-2.5 rounded-xl font-black text-xs bg-slate-100 text-slate-600";
+                bS.className = "py-2.5 rounded-xl font-bold text-xs bg-blue-600 text-white shadow-sm";
+                bK.className = "py-2.5 rounded-xl font-bold text-xs bg-slate-100 text-slate-600";
             }
         }
 
@@ -594,138 +566,110 @@
             const name = document.getElementById('authName').value.trim();
             const phone = '+998 ' + document.getElementById('authPhone').value.trim();
 
-            document.getElementById('faceStatusIcon').textContent = '✅';
-            document.getElementById('faceStatusText').textContent = 'Face ID Tasdiqlandi!';
+            document.getElementById('faceIcon').textContent = '✅';
+            document.getElementById('faceText').textContent = 'Face ID Tasdiqlandi!';
 
             setTimeout(() => {
                 window.currentUser = { name, phone, role };
-                localStorage.setItem('yuk_express_user', JSON.stringify(window.currentUser));
+                localStorage.setItem('yuk_user', JSON.stringify(window.currentUser));
                 closeAuthModal();
-                updateUserHeader();
-                showSection('dashboard');
-                showToast("Xush kelibsiz!", `${name} platformaga kirdi`);
+                updateHeaderAuth();
+                switchNav('logistics');
+                showToast("Xush kelibsiz!", `${name} tizimga kirdi`);
             }, 600);
         }
 
         function logoutUser() {
-            localStorage.removeItem('yuk_express_user');
+            localStorage.removeItem('yuk_user');
             window.currentUser = null;
-            updateUserHeader();
-            showSection('landing');
+            updateHeaderAuth();
+            switchNav('home');
             showToast("Chiqildi", "Tizimdan chiqdingiz");
         }
 
-        function updateUserHeader() {
-            const navSec = document.getElementById('userNavSection');
-            const regBtn = document.getElementById('mainRegisterBtn');
+        function updateHeaderAuth() {
+            const info = document.getElementById('userHeaderInfo');
+            const regBtn = document.getElementById('headerRegBtn');
             if (window.currentUser) {
-                navSec.classList.remove('hidden');
+                info.classList.remove('hidden');
                 regBtn.classList.add('hidden');
                 document.getElementById('headerUserName').textContent = window.currentUser.name;
                 document.getElementById('headerUserRole').textContent = window.currentUser.role;
-                document.getElementById('formPhone').value = window.currentUser.phone;
+                document.getElementById('cargoPhone').value = window.currentUser.phone.replace('+998 ', '');
             } else {
-                navSec.classList.add('hidden');
+                info.classList.add('hidden');
                 regBtn.classList.remove('hidden');
             }
         }
 
-        // VEHICLE DROPDOWNS
-        function renderVehicleDropdowns() {
-            const formSel = document.getElementById('formTruckType');
-            const filterSel = document.getElementById('filterTruck');
-            if (!formSel || !filterSel) return;
-
-            const opts = window.globalVehicles.map(v => `<option value="${v.name}">${v.name} (${v.capacity})</option>`).join('');
-            formSel.innerHTML = opts;
-            filterSel.innerHTML = '<option value="">Barcha Mashinalar</option>' + opts;
-        }
-
-        function openCustomVehicleModal() { document.getElementById('customVehicleModal').classList.remove('hidden'); }
-        function closeCustomVehicleModal() { document.getElementById('customVehicleModal').classList.add('hidden'); }
-
-        function handleSaveCustomVehicle(e) {
-            e.preventDefault();
-            const name = document.getElementById('customTruckName').value.trim();
-            const capacity = document.getElementById('customTruckCapacity').value.trim();
-
-            const newVehRef = window.fbPush(window.fbRef(window.firebaseDB, 'vehicles'));
-            window.fbSet(newVehRef, { name, capacity }).then(() => {
-                closeCustomVehicleModal();
-                showToast("Mashina Qo'shildi", name);
-            });
-        }
-
-        // CARGO POSTING & REALTIME FIREBASE SYNC
+        // CARGO OPERATIONS
         function handlePriceTypeChange(val) {
-            const w = document.getElementById('priceWrapper');
-            if (val === 'negotiable') {
-                w.style.display = 'none';
-            } else {
-                w.style.display = 'block';
-            }
+            const w = document.getElementById('cargoPriceWrapper');
+            if (val === 'negotiable') w.style.display = 'none';
+            else w.style.display = 'block';
         }
 
         function handlePostCargo(e) {
             e.preventDefault();
             if (!window.currentUser) { openAuthModal(); return; }
 
-            const from = document.getElementById('formFrom').value;
-            const to = document.getElementById('formTo').value;
-            const weight = document.getElementById('formWeight').value.trim();
-            const priceType = document.getElementById('formPriceType').value;
-            const price = priceType === 'negotiable' ? 0 : Number(document.getElementById('formPrice').value);
-            const truckType = document.getElementById('formTruckType').value;
-            const phone = document.getElementById('formPhone').value.trim();
+            const from = document.getElementById('cargoFrom').value;
+            const to = document.getElementById('cargoTo').value;
+            const weight = document.getElementById('cargoWeight').value.trim();
+            const priceType = document.getElementById('cargoPriceType').value;
+            const price = priceType === 'negotiable' ? 0 : Number(document.getElementById('cargoPrice').value);
+            const truckType = document.getElementById('cargoTruck').value;
+            const phone = '+998 ' + document.getElementById('cargoPhone').value.trim();
 
-            const newCargoData = {
+            const newCargo = {
                 from, to, weight, price, priceType, truckType, phone,
                 author: window.currentUser.name,
                 status: 'active',
                 createdAt: new Date().toISOString()
             };
 
-            const cargoesRef = window.fbRef(window.firebaseDB, 'cargoes');
-            const newPostRef = window.fbPush(cargoesRef);
-            window.fbSet(newPostRef, newCargoData).then(() => {
-                document.getElementById('createCargoForm').reset();
+            const newRef = window.fbPush(window.fbRef(window.firebaseDB, 'cargoes'));
+            window.fbSet(newRef, newCargo).then(() => {
+                document.getElementById('cargoForm').reset();
                 showToast("E'lon Joylandi", `${from} ➔ ${to}`);
             });
         }
 
-        // RENDERING CARGO LISTS
-        function renderLandingCount() {
-            const el = document.getElementById('landingCargoCount');
-            if (el) el.textContent = `${window.globalCargoes.filter(c => c.status === 'active').length} ta`;
+        window.updateUI = function() {
+            const countEl = document.getElementById('statCargoCount');
+            if (countEl) countEl.textContent = `${window.globalCargoes.filter(c => c.status === 'active').length} ta`;
+            renderClientList();
+            renderDriverFeed();
+            renderAdminList();
         }
 
-        function renderClientCargoes() {
-            const container = document.getElementById('clientCargoContainer');
-            const countEl = document.getElementById('myListingsCount');
-            if (!container) return;
+        function renderClientList() {
+            const list = document.getElementById('clientCargoList');
+            const badge = document.getElementById('myCargoCountBadge');
+            if (!list) return;
 
-            const myCargoes = window.globalCargoes.filter(c => window.currentUser && c.author === window.currentUser.name);
-            countEl.textContent = `${myCargoes.length} ta`;
+            const mine = window.globalCargoes.filter(c => window.currentUser && c.author === window.currentUser.name);
+            badge.textContent = `${mine.length} ta`;
 
-            if (myCargoes.length === 0) {
-                container.innerHTML = `<div class="glass-panel p-6 rounded-2xl text-center text-slate-400 text-xs font-bold">Siz hali e'lon berganingiz yo'q.</div>`;
+            if (mine.length === 0) {
+                list.innerHTML = `<div class="apple-card p-6 rounded-2xl text-center text-slate-400 text-xs font-bold">Sizda e'lonlar yo'q.</div>`;
                 return;
             }
 
-            container.innerHTML = myCargoes.map(c => `
-                <div class="glass-panel p-4 rounded-2xl border border-slate-200 flex items-center justify-between">
+            list.innerHTML = mine.map(c => `
+                <div class="apple-card p-4 rounded-2xl flex items-center justify-between">
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="text-xs font-black text-slate-900">${c.from}</span>
-                            <span class="text-sky-600 font-bold">➔</span>
-                            <span class="text-xs font-black text-slate-900">${c.to}</span>
-                            <span class="px-2 py-0.5 rounded-md text-[9px] font-black ${c.status === 'accepted' ? 'bg-rose-100 text-rose-600' : 'bg-emerald-100 text-emerald-600'} uppercase">
-                                ${c.status === 'accepted' ? 'Ommaga Yopildi (Band)' : 'Faol'}
+                            <span class="text-xs font-extrabold text-slate-900">${c.from}</span>
+                            <span class="text-blue-600 font-bold">➔</span>
+                            <span class="text-xs font-extrabold text-slate-900">${c.to}</span>
+                            <span class="px-2 py-0.5 rounded text-[9px] font-bold ${c.status === 'accepted' ? 'bg-rose-100 text-rose-600' : 'bg-emerald-100 text-emerald-600'}">
+                                ${c.status === 'accepted' ? 'Band' : 'Faol'}
                             </span>
                         </div>
-                        <p class="text-[11px] font-semibold text-slate-500 mt-1">${c.weight} &bull; ${c.truckType}</p>
+                        <p class="text-[11px] font-medium text-slate-500 mt-1">${c.weight} &bull; ${c.truckType}</p>
                     </div>
-                    <button onclick="deleteCargoFirebase('${c.id}')" class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold">O'chirish</button>
+                    <button onclick="deleteCargo('${c.id}')" class="px-3 py-1.5 rounded-xl bg-rose-50 text-rose-600 text-xs font-bold">O'chirish</button>
                 </div>
             `).join('');
         }
@@ -739,123 +683,90 @@
             const fTruck = document.getElementById('filterTruck').value;
 
             const filtered = window.globalCargoes.filter(c => {
-                const matchFrom = c.from.toLowerCase().includes(fFrom);
-                const matchTo = c.to.toLowerCase().includes(fTo);
-                const matchTruck = fTruck === '' || c.truckType === fTruck;
-                return matchFrom && matchTo && matchTruck;
+                return c.from.toLowerCase().includes(fFrom) && c.to.toLowerCase().includes(fTo) && (fTruck === '' || c.truckType === fTruck);
             });
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full glass-panel p-8 rounded-2xl text-center text-slate-400 text-xs font-bold">Yuklar topilmadi.</div>`;
+                grid.innerHTML = `<div class="col-span-full apple-card p-8 rounded-2xl text-center text-slate-400 text-xs font-bold">Yuklar topilmadi.</div>`;
                 return;
             }
 
             grid.innerHTML = filtered.map(c => `
-                <div class="glass-panel p-5 rounded-[28px] border border-slate-200 flex flex-col justify-between space-y-4">
+                <div class="apple-card p-5 rounded-[28px] flex flex-col justify-between space-y-4">
                     <div>
                         <div class="flex justify-between items-center mb-2">
-                            <span class="px-2.5 py-1 rounded-xl text-[10px] font-black ${c.status === 'accepted' ? 'bg-rose-100 text-rose-600' : 'bg-sky-50 text-sky-600'}">
-                                ${c.status === 'accepted' ? 'Ommaga Yopildi (Band)' : 'Faol E\'lon'}
+                            <span class="px-2.5 py-1 rounded-xl text-[10px] font-bold ${c.status === 'accepted' ? 'bg-rose-100 text-rose-600' : 'bg-blue-50 text-blue-600'}">
+                                ${c.status === 'accepted' ? 'Band qilingan' : 'Faol e\'lon'}
                             </span>
                             <span class="text-[10px] font-bold text-slate-400">${c.truckType}</span>
                         </div>
                         <div class="flex items-center gap-2 mb-1">
-                            <h3 class="text-sm font-black text-slate-900">${c.from}</h3>
-                            <span class="text-sky-600 font-bold">➔</span>
-                            <h3 class="text-sm font-black text-slate-900">${c.to}</h3>
+                            <h3 class="text-sm font-extrabold text-slate-900">${c.from}</h3>
+                            <span class="text-blue-600 font-bold">➔</span>
+                            <h3 class="text-sm font-extrabold text-slate-900">${c.to}</h3>
                         </div>
-                        <p class="text-xs font-medium text-slate-600">${c.weight}</p>
-                        <p class="text-xs font-black text-sky-600 mt-2">${c.priceType === 'negotiable' ? 'Kelishuv asosida' : c.price.toLocaleString() + ' UZS'}</p>
+                        <p class="text-xs text-slate-600">${c.weight}</p>
+                        <p class="text-xs font-extrabold text-blue-600 mt-2">${c.priceType === 'negotiable' ? 'Kelishuv asosida' : c.price.toLocaleString() + ' UZS'}</p>
                     </div>
 
                     <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
                         ${c.status === 'accepted' ? `
-                            <button onclick="cancelCargoFirebase('${c.id}')" class="w-full py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-700 font-black text-xs flex items-center justify-center gap-1">
-                                🎧 Dispetcher: Bekor qilish (Ochish)
-                            </button>
+                            <button onclick="changeStatus('${c.id}', 'active')" class="w-full py-2.5 rounded-xl bg-amber-50 text-amber-700 font-bold text-xs">Dispetcher: Qayta ochish</button>
                         ` : `
-                            <button onclick="openCallModal('${c.phone}', '${c.id}')" class="w-full py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-black text-xs shadow-md shadow-sky-600/20 apple-bounce">
-                                📞 Qo'ng'iroq Qilish & Yukni Olish
-                            </button>
+                            <a href="tel:${c.phone}" onclick="changeStatus('${c.id}', 'accepted')" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-md shadow-blue-600/20 apple-btn">
+                                📞 Qo'ng'iroq qilish & Olish
+                            </a>
                         `}
                     </div>
                 </div>
             `).join('');
         }
 
-        // ADMIN PANEL FUNCTIONS
-        function renderAdminCargoList() {
+        function renderAdminList() {
             const list = document.getElementById('adminCargoList');
             if (!list) return;
 
             if (window.globalCargoes.length === 0) {
-                list.innerHTML = `<div class="text-center text-xs font-bold text-slate-400 py-4">Firebase bazasida e'lonlar yo'q.</div>`;
+                list.innerHTML = `<div class="text-center text-xs text-slate-400 py-4">Firebase bazasida e'lonlar yo'q.</div>`;
                 return;
             }
 
             list.innerHTML = window.globalCargoes.map(c => `
-                <div class="glass-panel p-4 rounded-2xl border border-slate-200 flex items-center justify-between">
+                <div class="apple-card p-4 rounded-2xl flex items-center justify-between">
                     <div>
-                        <span class="text-xs font-black text-slate-900">${c.from} ➔ ${c.to}</span>
-                        <span class="text-[10px] font-bold text-slate-400 ml-2">(${c.author} &bull; ${c.phone})</span>
-                        <span class="block text-[10px] font-bold ${c.status === 'accepted' ? 'text-rose-600' : 'text-emerald-600'}">Holati: ${c.status}</span>
+                        <span class="text-xs font-bold text-slate-900">${c.from} ➔ ${c.to}</span>
+                        <span class="text-[10px] text-slate-400 ml-2">(${c.author} &bull; ${c.phone})</span>
                     </div>
                     <div class="flex gap-2">
-                        <button onclick="cancelCargoFirebase('${c.id}')" class="px-3 py-1 rounded-xl bg-amber-100 text-amber-800 text-xs font-bold">Aktivga Qaytarish</button>
-                        <button onclick="deleteCargoFirebase('${c.id}')" class="px-3 py-1 rounded-xl bg-rose-600 text-white text-xs font-bold">Bazadan O'chirish</button>
+                        <button onclick="changeStatus('${c.id}', 'active')" class="px-3 py-1 rounded-xl bg-amber-100 text-amber-800 text-xs font-bold">Aktiv qilish</button>
+                        <button onclick="deleteCargo('${c.id}')" class="px-3 py-1 rounded-xl bg-rose-600 text-white text-xs font-bold">O'chirish</button>
                     </div>
                 </div>
             `).join('');
         }
 
-        // CALL SIMULATION & ACCEPTANCE
-        let targetCargoIdForCall = null;
-        function openCallModal(phone, cargoId) {
-            targetCargoIdForCall = cargoId;
-            document.getElementById('callPhoneText').textContent = phone;
-            document.getElementById('confirmAcceptBtn').onclick = () => acceptCargoFirebase(cargoId);
-            document.getElementById('callModal').classList.remove('hidden');
-        }
-        function closeCallModal() { document.getElementById('callModal').classList.add('hidden'); }
-
-        function acceptCargoFirebase(id) {
-            const itemRef = window.fbRef(window.firebaseDB, `cargoes/${id}`);
-            window.fbUpdate(itemRef, { status: 'accepted' }).then(() => {
-                closeCallModal();
-                showToast("Yuk Qabul Qilindi", "Status ommaga yopildi deb o'zgartirildi!");
+        function changeStatus(id, status) {
+            window.fbUpdate(window.fbRef(window.firebaseDB, `cargoes/${id}`), { status }).then(() => {
+                showToast("Yangilandi", "Yuk holati o'zgardi");
             });
         }
 
-        function cancelCargoFirebase(id) {
-            const itemRef = window.fbRef(window.firebaseDB, `cargoes/${id}`);
-            window.fbUpdate(itemRef, { status: 'active' }).then(() => {
-                showToast("Dispetcher Bekor Qildi", "Yuk qayta faol holatga keltirildi!");
+        function deleteCargo(id) {
+            window.fbRemove(window.fbRef(window.firebaseDB, `cargoes/${id}`)).then(() => {
+                showToast("O'chirildi", "E'lon bazadan olib tashlandi");
             });
         }
 
-        function deleteCargoFirebase(id) {
-            const itemRef = window.fbRef(window.firebaseDB, `cargoes/${id}`);
-            window.fbRemove(itemRef).then(() => {
-                showToast("E'lon O'chirildi", "Firebase bazasidan o'chirildi.");
-            });
-        }
-
-        // TOAST NOTIFICATION
         function showToast(title, desc) {
             const toast = document.getElementById('toast');
             document.getElementById('toastTitle').textContent = title;
             document.getElementById('toastDesc').textContent = desc;
-
             toast.classList.remove('translate-y-24', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-24', 'opacity-0');
-            }, 3000);
+            setTimeout(() => { toast.classList.add('translate-y-24', 'opacity-0'); }, 3000);
         }
 
-        // INITIAL LOAD
         window.addEventListener('DOMContentLoaded', () => {
-            updateUserHeader();
-            renderLandingCount();
+            updateHeaderAuth();
         });
     </script>
 </body>
