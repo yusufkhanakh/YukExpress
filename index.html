@@ -14,9 +14,9 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        appleBlue: '#007AFF',
-                        appleDark: '#1D1D1F',
-                        appleGray: '#F5F5F7'
+                        appleBlue: '#0284C7',
+                        appleDark: '#0F172A',
+                        appleGray: '#F8FAFC'
                     }
                 }
             }
@@ -24,19 +24,19 @@
     </script>
     <style>
         * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
-        body { background-color: #FFFFFF; color: #1D1D1F; overflow-x: hidden; }
+        body { background-color: #FFFFFF; color: #0F172A; overflow-x: hidden; }
 
         .apple-glass {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(229, 229, 234, 0.8);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 10px 30px rgba(2, 132, 199, 0.04);
         }
 
         .apple-card {
             background: #FFFFFF;
-            border: 1px solid #E5E5EA;
+            border: 1px solid #E2E8F0;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
         }
 
@@ -46,6 +46,32 @@
         .apple-btn:hover { transform: translateY(-1px); }
         .apple-btn:active { transform: scale(0.98); }
 
+        /* Interactive Hover Glow Circle Shape */
+        .interactive-glow-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .interactive-glow-card::before {
+            content: "";
+            position: absolute;
+            top: var(--glow-y, 50%);
+            left: var(--glow-x, 50%);
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(2, 132, 199, 0.16) 0%, rgba(2, 132, 199, 0) 70%);
+            transform: translate(-50%, -50%) scale(0);
+            border-radius: 50%;
+            pointer-events: none;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            opacity: 0;
+            z-index: 0;
+        }
+        .interactive-glow-card:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
         @keyframes scanLaser {
             0% { top: 0%; opacity: 0.9; }
             50% { top: 92%; opacity: 1; }
@@ -54,36 +80,36 @@
         .laser-line { animation: scanLaser 1.8s infinite ease-in-out; }
 
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #F5F5F7; }
-        ::-webkit-scrollbar-thumb { background: #C7C7CC; border-radius: 9999px; }
+        ::-webkit-scrollbar-track { background: #F8FAFC; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
     </style>
 </head>
-<body class="h-full bg-white text-slate-900 flex flex-col selection:bg-blue-500 selection:text-white">
+<body class="h-full bg-white text-slate-900 flex flex-col selection:bg-sky-500 selection:text-white">
 
     <!-- Preloader -->
     <div id="preloader" class="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center transition-opacity duration-500">
         <div class="relative w-16 h-16 mb-4">
-            <div class="absolute inset-0 rounded-full border-4 border-slate-100 animate-pulse"></div>
-            <div class="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent animate-spin"></div>
+            <div class="absolute inset-0 rounded-full border-4 border-sky-100 animate-pulse"></div>
+            <div class="absolute inset-0 rounded-full border-4 border-sky-600 border-t-transparent animate-spin"></div>
         </div>
         <div class="text-xl font-bold tracking-tight text-slate-900">
-            <span class="text-blue-600">Yuk</span>Express
+            <span class="text-sky-600">Yuk</span>Express
         </div>
         <p class="text-xs text-slate-400 mt-1">Apple Silicon Engine Ulanmoqda...</p>
     </div>
 
-    <!-- HEADER & NAVBAR (Home, About, Register, Logistics) -->
+    <!-- HEADER & NAVBAR -->
     <header class="sticky top-0 z-30 apple-glass border-b border-slate-200 px-4 sm:px-8 py-3">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             
-            <!-- Logo (10 clicks = Secret Admin Panel) -->
+            <!-- Logo (10 Clicks = Secret Admin Panel) -->
             <div onclick="handleLogoClick()" class="flex items-center gap-3 cursor-pointer select-none group" title="Admin Panel uchun 10 marta bosing">
-                <div class="w-10 h-10 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-sm group-hover:scale-105 transition">
+                <div class="w-10 h-10 bg-sky-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-sm group-hover:scale-105 transition">
                     Y
                 </div>
                 <div>
                     <span class="text-base font-bold text-slate-900 tracking-tight">YukExpress</span>
-                    <span class="block text-[9px] font-semibold text-blue-600 uppercase tracking-widest">Logistics Hub</span>
+                    <span class="block text-[9px] font-semibold text-sky-600 uppercase tracking-widest">Logistics Hub</span>
                 </div>
             </div>
 
@@ -92,23 +118,25 @@
                 <button onclick="switchNav('home')" id="navHome" class="px-4 py-2 rounded-xl text-xs font-bold transition bg-white text-slate-900 shadow-sm">Home</button>
                 <button onclick="switchNav('about')" id="navAbout" class="px-4 py-2 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900">About</button>
                 <button onclick="switchNav('logistics')" id="navLogistics" class="px-4 py-2 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900">Logistics</button>
-                <button onclick="openAuthModal()" id="navRegister" class="px-4 py-2 rounded-xl text-xs font-bold transition text-blue-600 hover:bg-blue-50">Register / Login</button>
+                <button onclick="openAuthModal()" id="navRegister" class="px-4 py-2 rounded-xl text-xs font-bold transition text-sky-600 hover:bg-sky-50">Register / Login</button>
             </nav>
 
             <!-- User Status / Auth Button -->
             <div class="flex items-center gap-3">
                 <div id="userHeaderInfo" class="hidden flex items-center gap-3 pl-3 border-l border-slate-200">
-                    <div id="userAvatarBadge" class="w-8 h-8 rounded-full bg-blue-100 border border-blue-300 flex items-center justify-center text-xs font-bold text-blue-600">👤</div>
+                    <div id="userAvatarBadge" class="w-8 h-8 rounded-full bg-sky-100 border border-sky-300 flex items-center justify-center text-xs font-bold text-sky-600 overflow-hidden">
+                        👤
+                    </div>
                     <div class="text-right hidden sm:block">
                         <p id="headerUserName" class="text-xs font-bold text-slate-900"></p>
-                        <p id="headerUserRole" class="text-[10px] font-semibold text-blue-600 uppercase"></p>
+                        <p id="headerUserRole" class="text-[10px] font-semibold text-sky-600 uppercase"></p>
                     </div>
                     <button onclick="logoutUser()" class="p-2 rounded-xl bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-600 transition" title="Chiqish">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
                     </button>
                 </div>
 
-                <button id="headerRegBtn" onclick="openAuthModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-5 py-2.5 rounded-2xl shadow-md shadow-blue-600/20 apple-btn">
+                <button id="headerRegBtn" onclick="openAuthModal()" class="bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs px-5 py-2.5 rounded-2xl shadow-md shadow-sky-600/20 apple-btn">
                     Register
                 </button>
             </div>
@@ -121,15 +149,14 @@
         <button onclick="switchNav('home')" class="flex-1 py-2 px-3 rounded-xl text-[11px] font-bold bg-white text-slate-900 shadow-sm whitespace-nowrap">Home</button>
         <button onclick="switchNav('about')" class="flex-1 py-2 px-3 rounded-xl text-[11px] font-bold text-slate-600 whitespace-nowrap">About</button>
         <button onclick="switchNav('logistics')" class="flex-1 py-2 px-3 rounded-xl text-[11px] font-bold text-slate-600 whitespace-nowrap">Logistics</button>
-        <button onclick="openAuthModal()" class="flex-1 py-2 px-3 rounded-xl text-[11px] font-bold text-blue-600 whitespace-nowrap">Register</button>
+        <button onclick="openAuthModal()" class="flex-1 py-2 px-3 rounded-xl text-[11px] font-bold text-sky-600 whitespace-nowrap">Register</button>
     </div>
 
     <!-- ================= VIEW 1: HOME (LANDING PAGE) ================= -->
     <main id="viewHome" class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-8 space-y-12">
-        <!-- Hero Section -->
-        <div class="apple-card p-8 sm:p-12 rounded-[36px] bg-gradient-to-br from-blue-50/40 via-white to-white flex flex-col md:flex-row items-center justify-between gap-8">
-            <div class="space-y-4 max-w-2xl text-center md:text-left">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider">
+        <div class="apple-card p-8 sm:p-12 rounded-[36px] bg-gradient-to-br from-sky-50/40 via-white to-white flex flex-col md:flex-row items-center justify-between gap-8 interactive-glow-card">
+            <div class="space-y-4 max-w-2xl text-center md:text-left relative z-10">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-100 text-sky-700 text-xs font-bold uppercase tracking-wider">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
                     O'zbekistondagi №1 Logistika Platformasi
                 </div>
@@ -140,7 +167,7 @@
                     YukExpress yordamida kuratorlar o'z yuklarini butunlay bepul joylashadi, haydovchilar (shofyorlar) esa O'zbekistonning 12 ta viloyatidan mos yukni tanlab real vaqt rejimida qabul qilishadi. Biometrik Face ID xavfsizligi kafolatlangan.
                 </p>
                 <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
-                    <button onclick="openAuthModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-2xl shadow-lg shadow-blue-600/25 apple-btn uppercase tracking-wider">
+                    <button onclick="openAuthModal()" class="bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-2xl shadow-lg shadow-sky-600/25 apple-btn uppercase tracking-wider">
                         Ro'yxatdan O'tish & Kirish ➔
                     </button>
                     <button onclick="switchNav('about')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs sm:text-sm px-6 py-3.5 rounded-2xl apple-btn">
@@ -149,17 +176,16 @@
                 </div>
             </div>
 
-            <!-- Stats & Live Counter -->
-            <div class="w-full md:w-80 space-y-3">
-                <div class="apple-card p-5 rounded-3xl">
+            <div class="w-full md:w-80 space-y-3 relative z-10">
+                <div class="apple-card p-5 rounded-3xl interactive-glow-card">
                     <p class="text-xs font-bold text-slate-400 uppercase">Faol Yuklar Bazasi</p>
-                    <h3 id="statCargoCount" class="text-2xl font-black text-blue-600">0 ta</h3>
+                    <h3 id="statCargoCount" class="text-2xl font-black text-sky-600">0 ta</h3>
                 </div>
-                <div class="apple-card p-5 rounded-3xl">
+                <div class="apple-card p-5 rounded-3xl interactive-glow-card">
                     <p class="text-xs font-bold text-slate-400 uppercase">Qamrov</p>
                     <h3 class="text-2xl font-black text-slate-900">12 ta Viloyat</h3>
                 </div>
-                <div class="apple-card p-5 rounded-3xl flex items-center gap-3">
+                <div class="apple-card p-5 rounded-3xl flex items-center gap-3 interactive-glow-card">
                     <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center font-bold">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
                     </div>
@@ -174,9 +200,9 @@
 
     <!-- ================= VIEW 2: ABOUT (PLATFORM HAQIDA) ================= -->
     <main id="viewAbout" class="hidden flex-1 max-w-7xl w-full mx-auto p-4 sm:p-8 space-y-8">
-        <div class="apple-card p-8 sm:p-12 rounded-[36px] space-y-6">
-            <div class="max-w-3xl space-y-3">
-                <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">About YukExpress</span>
+        <div class="apple-card p-8 sm:p-12 rounded-[36px] space-y-6 interactive-glow-card">
+            <div class="max-w-3xl space-y-3 relative z-10">
+                <span class="text-xs font-bold text-sky-600 uppercase tracking-widest">About YukExpress</span>
                 <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
                     Logistika sohasida yangi raqamli standart
                 </h2>
@@ -185,23 +211,23 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-                <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200 space-y-3">
-                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 relative z-10">
+                <div class="p-6 rounded-3xl bg-slate-50/80 border border-slate-200 space-y-3 interactive-glow-card">
+                    <div class="w-10 h-10 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                     </div>
                     <h3 class="text-base font-bold text-slate-900">Kuratorlar Uchun</h3>
                     <p class="text-xs text-slate-600 leading-relaxed">Yukingizni istalgan viloyatga bepul e'lon qiling, narx turini belgilang va ishonchli shofyor bilan tezda bog'laning.</p>
                 </div>
-                <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200 space-y-3">
-                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center">
+                <div class="p-6 rounded-3xl bg-slate-50/80 border border-slate-200 space-y-3 interactive-glow-card">
+                    <div class="w-10 h-10 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
                     </div>
                     <h3 class="text-base font-bold text-slate-900">Shofyorlar Uchun</h3>
                     <p class="text-xs text-slate-600 leading-relaxed">Bo'sh turmang! O'zbekiston bo'ylab barcha bo'sh yuklar bozoridan o'z mashinangizga mosini tanlab oling.</p>
                 </div>
-                <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200 space-y-3">
-                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center">
+                <div class="p-6 rounded-3xl bg-slate-50/80 border border-slate-200 space-y-3 interactive-glow-card">
+                    <div class="w-10 h-10 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                     </div>
                     <h3 class="text-base font-bold text-slate-900">Face ID Xavfsizlik</h3>
@@ -215,14 +241,14 @@
     <main id="viewLogistics" class="hidden flex-1 max-w-7xl w-full mx-auto p-4 sm:p-8 space-y-6">
         <div class="flex items-center justify-between apple-card p-3 rounded-2xl">
             <div class="flex gap-2">
-                <button onclick="switchLogisticsTab('client')" id="tabClient" class="px-5 py-2.5 rounded-xl text-xs font-bold transition bg-blue-600 text-white shadow-sm">
+                <button onclick="switchLogisticsTab('client')" id="tabClient" class="px-5 py-2.5 rounded-xl text-xs font-bold transition bg-sky-600 text-white shadow-sm">
                     Kurator (Yuk E'lon Qilish)
                 </button>
                 <button onclick="switchLogisticsTab('driver')" id="tabDriver" class="px-5 py-2.5 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900">
                     Shofyor (Yuklar Bozori)
                 </button>
             </div>
-            <span class="text-xs font-bold text-blue-600 hidden sm:block pr-3">● Realtime Firebase Active</span>
+            <span class="text-xs font-bold text-sky-600 hidden sm:block pr-3">● Realtime Firebase Active</span>
         </div>
 
         <!-- Kurator Section -->
@@ -230,7 +256,7 @@
             <div class="lg:col-span-5 apple-card p-6 rounded-[32px] h-fit space-y-4">
                 <h2 class="text-sm font-extrabold text-slate-900 pb-3 border-b border-slate-100 flex justify-between items-center">
                     <span>Yangi Yuk E'loni</span>
-                    <span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-2.5 py-1 rounded-lg">BEPUL</span>
+                    <span class="text-[10px] font-bold bg-sky-50 text-sky-600 px-2.5 py-1 rounded-lg">BEPUL</span>
                 </h2>
 
                 <form id="cargoForm" onsubmit="handlePostCargo(event)" class="space-y-4">
@@ -307,7 +333,7 @@
                         <input type="tel" id="cargoPhone" required placeholder="+998 (90) 123-45-67" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none">
                     </div>
 
-                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-2xl shadow-md shadow-blue-600/20 apple-btn text-xs uppercase tracking-wider">
+                    <button type="submit" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 rounded-2xl shadow-md shadow-sky-600/20 apple-btn text-xs uppercase tracking-wider">
                         E'lonni Joylash
                     </button>
                 </form>
@@ -316,7 +342,7 @@
             <div class="lg:col-span-7 space-y-4">
                 <div class="apple-card p-4 rounded-2xl flex justify-between items-center">
                     <h3 class="text-xs font-extrabold text-slate-900">Mening E'lonlarim</h3>
-                    <span id="myCargoCountBadge" class="text-xs font-bold bg-blue-50 text-blue-600 px-3 py-1 rounded-xl">0 ta</span>
+                    <span id="myCargoCountBadge" class="text-xs font-bold bg-sky-50 text-sky-600 px-3 py-1 rounded-xl">0 ta</span>
                 </div>
                 <div id="clientCargoList" class="space-y-3"></div>
             </div>
@@ -362,58 +388,89 @@
         <div id="adminCargoList" class="space-y-3"></div>
     </main>
 
-    <!-- ================= MODAL: AUTHENTICATION & FACE ID ================= -->
+    <!-- ================= MODAL: STEP-BY-STEP AUTH & FACE ID ================= -->
     <div id="authModal" class="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div class="w-full max-w-md apple-card p-6 sm:p-8 rounded-[36px] shadow-2xl space-y-4">
-            <div class="text-center">
-                <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl mx-auto flex items-center justify-center mb-2 font-bold text-lg">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.115 6.845l.209-.374m-5.59-1.921A13.938 13.938 0 0112 11v0a4 4 0 118 0c0 1.017-.07 2.019-.203 3"/></svg>
-                </div>
-                <h3 class="text-base font-extrabold text-slate-900">Face ID & Ro'yxatdan O'tish</h3>
-                <p class="text-xs text-slate-500">Ism va telefon raqamingizni kiritib yuzingizni skanerlang</p>
-            </div>
-
-            <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-3">
-                <div class="grid grid-cols-2 gap-2">
-                    <button type="button" onclick="setAuthRole('kurator')" id="roleKuratorBtn" class="py-2.5 rounded-xl font-bold text-xs bg-blue-600 text-white shadow-sm">Kurator</button>
-                    <button type="button" onclick="setAuthRole('shofyor')" id="roleShofyorBtn" class="py-2.5 rounded-xl font-bold text-xs bg-slate-100 text-slate-600">Shofyor</button>
-                </div>
-                <input type="hidden" id="authRoleInput" value="kurator">
-
-                <div>
-                    <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Ism va Familiya *</label>
-                    <input type="text" id="authName" required placeholder="Anvar Karimov" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none">
-                </div>
-
-                <div>
-                    <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Telefon Raqam *</label>
-                    <div class="flex items-center rounded-xl border border-slate-200 overflow-hidden">
-                        <span class="px-3 py-2.5 text-xs font-bold text-blue-600 bg-blue-50 border-r border-slate-200">+998</span>
-                        <input type="tel" id="authPhone" required placeholder="(90) 123-45-67" class="flex-1 px-3 py-2.5 text-xs font-bold outline-none">
+            
+            <!-- STEP 1: CREDENTIALS INPUT -->
+            <div id="authStep1" class="space-y-4">
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-sky-50 text-sky-600 rounded-2xl mx-auto flex items-center justify-center mb-2 font-bold">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                     </div>
+                    <h3 class="text-base font-extrabold text-slate-900">Ma'lumotlarni Kiriting</h3>
+                    <p class="text-xs text-slate-500">Ism va telefon raqamingizni yozing</p>
                 </div>
 
-                <!-- Face Scanner Simulation Box -->
-                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-center">
-                    <div class="w-16 h-20 mx-auto rounded-3xl border-2 border-blue-500 bg-white relative overflow-hidden flex items-center justify-center">
-                        <div class="absolute inset-0 bg-blue-50/40"></div>
-                        <div class="absolute left-0 right-0 h-0.5 bg-blue-500 laser-line"></div>
-                        <span id="faceIcon" class="text-2xl">👤</span>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Ism va Familiya *</label>
+                        <input type="text" id="inputName" required placeholder="Anvar Karimov" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold outline-none">
                     </div>
-                    <p id="faceText" class="text-[10px] font-bold text-slate-600 mt-2">Face ID Tayyor</p>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Telefon Raqam *</label>
+                        <div class="flex items-center rounded-xl border border-slate-200 overflow-hidden">
+                            <span class="px-3 py-2.5 text-xs font-bold text-sky-600 bg-sky-50 border-r border-slate-200">+998</span>
+                            <input type="tel" id="inputPhone" required oninput="formatPhoneMask(this)" placeholder="(90) 123-45-67" maxlength="14" class="flex-1 px-3 py-2.5 text-xs font-bold outline-none">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="flex gap-2 pt-1">
                     <button type="button" onclick="closeAuthModal()" class="flex-1 bg-slate-100 text-slate-600 font-bold py-2.5 rounded-xl text-xs">Yopish</button>
-                    <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md shadow-blue-600/20 apple-btn">Tasdiqlash</button>
+                    <button type="button" onclick="goToFaceIdStep()" class="flex-1 bg-sky-600 hover:bg-sky-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md shadow-sky-600/20 apple-btn">Keyingisi (Face ID ➔)</button>
                 </div>
-            </form>
+            </div>
+
+            <!-- STEP 2: FACE ID SCANNER -->
+            <div id="authStep2" class="space-y-4 hidden">
+                <div class="text-center">
+                    <h3 class="text-base font-extrabold text-slate-900">Face ID Biometrik Skaner</h3>
+                    <p class="text-xs text-slate-500">Kameraga qarang va yuzingizni tasdiqlang</p>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 rounded-3xl p-4 text-center relative overflow-hidden">
+                    <div class="w-32 h-40 mx-auto rounded-[40px] border-2 border-sky-500 bg-white relative overflow-hidden flex items-center justify-center shadow-inner">
+                        <video id="faceCamera" autoplay playsinline class="absolute inset-0 w-full h-full object-cover"></video>
+                        <div class="absolute inset-0 bg-sky-50/20"></div>
+                        <div class="absolute left-0 right-0 h-0.5 bg-sky-500 laser-line shadow-[0_0_10px_#0284C7]"></div>
+                        <div id="faceIconOverlay" class="absolute inset-0 flex items-center justify-center text-3xl font-black text-sky-600">👤</div>
+                    </div>
+                    <canvas id="faceCanvas" class="hidden"></canvas>
+                    <p id="faceStatusText" class="text-[11px] font-bold text-slate-600 mt-3">Yuz skanerlanmoqda...</p>
+                </div>
+
+                <button type="button" onclick="verifyFaceId()" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 rounded-2xl text-xs shadow-md shadow-sky-600/20 apple-btn uppercase tracking-wider">
+                    Skanerlash & Tasdiqlash
+                </button>
+            </div>
+
+            <!-- STEP 3: ROLE SELECTION (KURATOR OR SHOFYOR) -->
+            <div id="authStep3" class="space-y-4 hidden">
+                <div class="text-center">
+                    <div id="capturedFacePreview" class="w-16 h-16 rounded-full mx-auto border-2 border-emerald-500 overflow-hidden mb-2 shadow-md"></div>
+                    <h3 class="text-base font-extrabold text-slate-900">Rolingizni Tanlang</h3>
+                    <p class="text-xs text-slate-500">Platformada kim bo'lib ishlaysiz?</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                    <button type="button" onclick="completeRegistration('kurator')" class="p-4 rounded-2xl border-2 border-sky-600 bg-sky-50/50 hover:bg-sky-100/50 transition text-center space-y-1">
+                        <span class="block text-xs font-black text-slate-900">Kurator</span>
+                        <span class="block text-[10px] text-slate-500">Yuk beruvchi</span>
+                    </button>
+                    <button type="button" onclick="completeRegistration('shofyor')" class="p-4 rounded-2xl border-2 border-slate-200 hover:border-sky-600 transition text-center space-y-1">
+                        <span class="block text-xs font-black text-slate-900">Shofyor</span>
+                        <span class="block text-[10px] text-slate-500">Haydovchi</span>
+                    </button>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <!-- TOAST NOTIFICATION -->
     <div id="toast" class="fixed bottom-6 right-6 z-50 apple-card px-5 py-3 rounded-2xl shadow-xl transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-3">
-        <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">✓</div>
+        <div class="w-7 h-7 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-xs">✓</div>
         <div>
             <p id="toastTitle" class="text-xs font-bold text-slate-900"></p>
             <p id="toastDesc" class="text-[10px] text-slate-500"></p>
@@ -446,7 +503,6 @@
         window.fbRemove = remove;
         window.fbUpdate = update;
 
-        // Realtime sync
         onValue(ref(db, 'cargoes'), (snapshot) => {
             const data = snapshot.val();
             window.globalCargoes = [];
@@ -456,7 +512,6 @@
                 });
             }
             window.globalCargoes.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
-            
             if (window.updateUI) window.updateUI();
         });
 
@@ -474,6 +529,20 @@
         window.globalCargoes = [];
         let logoClicks = 0;
         let logoTimer = null;
+        let tempRegData = {};
+        let cameraStream = null;
+
+        // Interactive Glow Mouse Tracking for Cards
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.interactive-glow-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--glow-x', `${x}px`);
+                card.style.setProperty('--glow-y', `${y}px`);
+            });
+        });
 
         function handleLogoClick() {
             logoClicks++;
@@ -487,19 +556,27 @@
             }
         }
 
-        // NAVIGATION HANDLER (Home, About, Logistics, Admin)
+        // Phone Mask format: (90) 123-45-67
+        function formatPhoneMask(input) {
+            let val = input.value.replace(/\D/g, '').substring(0, 9);
+            let formatted = '';
+            if (val.length > 0) formatted += '(' + val.substring(0, 2);
+            if (val.length > 2) formatted += ') ' + val.substring(2, 5);
+            if (val.length > 5) formatted += '-' + val.substring(5, 7);
+            if (val.length > 7) formatted += '-' + val.substring(7, 9);
+            input.value = formatted;
+        }
+
+        // NAVIGATION HANDLER
         function switchNav(view) {
             document.getElementById('viewHome').classList.add('hidden');
             document.getElementById('viewAbout').classList.add('hidden');
             document.getElementById('viewLogistics').classList.add('hidden');
             document.getElementById('viewAdmin').classList.add('hidden');
 
-            // Nav active states
             ['navHome', 'navAbout', 'navLogistics'].forEach(id => {
                 const el = document.getElementById(id);
-                if(el) {
-                    el.className = "px-4 py-2 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900";
-                }
+                if(el) el.className = "px-4 py-2 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900";
             });
 
             if (view === 'home') {
@@ -531,52 +608,90 @@
             if (tab === 'client') {
                 sClient.classList.remove('hidden');
                 sDriver.classList.add('hidden');
-                bClient.className = "px-5 py-2.5 rounded-xl text-xs font-bold transition bg-blue-600 text-white shadow-sm";
+                bClient.className = "px-5 py-2.5 rounded-xl text-xs font-bold transition bg-sky-600 text-white shadow-sm";
                 bDriver.className = "px-5 py-2.5 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900";
                 renderClientList();
             } else {
                 sDriver.classList.remove('hidden');
                 sClient.classList.add('hidden');
-                bDriver.className = "px-5 py-2.5 rounded-xl text-xs font-bold transition bg-blue-600 text-white shadow-sm";
+                bDriver.className = "px-5 py-2.5 rounded-xl text-xs font-bold transition bg-sky-600 text-white shadow-sm";
                 bClient.className = "px-5 py-2.5 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900";
                 renderDriverFeed();
             }
         }
 
-        // AUTH MODAL & FACE ID
-        function openAuthModal() { document.getElementById('authModal').classList.remove('hidden'); }
-        function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
+        // AUTH & FACE ID STEP FLOW
+        function openAuthModal() {
+            document.getElementById('authModal').classList.remove('hidden');
+            document.getElementById('authStep1').classList.remove('hidden');
+            document.getElementById('authStep2').classList.add('hidden');
+            document.getElementById('authStep3').classList.add('hidden');
+        }
 
-        function setAuthRole(role) {
-            document.getElementById('authRoleInput').value = role;
-            const bK = document.getElementById('roleKuratorBtn');
-            const bS = document.getElementById('roleShofyorBtn');
-            if (role === 'kurator') {
-                bK.className = "py-2.5 rounded-xl font-bold text-xs bg-blue-600 text-white shadow-sm";
-                bS.className = "py-2.5 rounded-xl font-bold text-xs bg-slate-100 text-slate-600";
-            } else {
-                bS.className = "py-2.5 rounded-xl font-bold text-xs bg-blue-600 text-white shadow-sm";
-                bK.className = "py-2.5 rounded-xl font-bold text-xs bg-slate-100 text-slate-600";
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(t => t.stop());
+                cameraStream = null;
             }
         }
 
-        function handleAuthSubmit(e) {
-            e.preventDefault();
-            const role = document.getElementById('authRoleInput').value;
-            const name = document.getElementById('authName').value.trim();
-            const phone = '+998 ' + document.getElementById('authPhone').value.trim();
+        async function goToFaceIdStep() {
+            const name = document.getElementById('inputName').value.trim();
+            const phone = document.getElementById('inputPhone').value.trim();
+            if (!name || phone.length < 14) {
+                showToast("Xatolik", "Ism va to'liq telefon raqamni kiriting!");
+                return;
+            }
 
-            document.getElementById('faceIcon').textContent = '✅';
-            document.getElementById('faceText').textContent = 'Face ID Tasdiqlandi!';
+            tempRegData = { name, phone: '+998 ' + phone };
+            
+            document.getElementById('authStep1').classList.add('hidden');
+            document.getElementById('authStep2').classList.remove('hidden');
 
-            setTimeout(() => {
-                window.currentUser = { name, phone, role };
-                localStorage.setItem('yuk_user', JSON.stringify(window.currentUser));
-                closeAuthModal();
-                updateHeaderAuth();
-                switchNav('logistics');
-                showToast("Xush kelibsiz!", `${name} tizimga kirdi`);
-            }, 600);
+            // Start Camera for Face ID
+            try {
+                cameraStream = await navigator.mediaDevices.getUserMedia({ video: { width: 300, height: 300 } });
+                const video = document.getElementById('faceCamera');
+                video.srcObject = cameraStream;
+            } catch (err) {
+                document.getElementById('faceStatusText').textContent = "Kamera topilmadi, simulyatsiya ishlaydi.";
+            }
+        }
+
+        function verifyFaceId() {
+            const video = document.getElementById('faceCamera');
+            const canvas = document.getElementById('faceCanvas');
+            let faceImage = '';
+
+            if (video && video.srcObject) {
+                canvas.width = 150;
+                canvas.height = 150;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0, 150, 150);
+                faceImage = canvas.toDataURL('image/png');
+                
+                cameraStream.getTracks().forEach(t => t.stop());
+            } else {
+                faceImage = 'https://i.postimg.cc/cJDdVcCZ/Isuzu-5-Tonna.png';
+            }
+
+            tempRegData.faceImage = faceImage;
+            document.getElementById('capturedFacePreview').innerHTML = `<img src="${faceImage}" class="w-full h-full object-cover">`;
+
+            document.getElementById('authStep2').classList.add('hidden');
+            document.getElementById('authStep3').classList.remove('hidden');
+            showToast("Face ID", "Yuz tasdiqlandi!");
+        }
+
+        function completeRegistration(role) {
+            tempRegData.role = role;
+            window.currentUser = tempRegData;
+            localStorage.setItem('yuk_user', JSON.stringify(window.currentUser));
+            closeAuthModal();
+            updateHeaderAuth();
+            switchNav('logistics');
+            showToast("Muvaffaqiyatli", `${window.currentUser.name} tizimga kirdi`);
         }
 
         function logoutUser() {
@@ -596,13 +711,16 @@
                 document.getElementById('headerUserName').textContent = window.currentUser.name;
                 document.getElementById('headerUserRole').textContent = window.currentUser.role;
                 document.getElementById('cargoPhone').value = window.currentUser.phone.replace('+998 ', '');
+                if(window.currentUser.faceImage) {
+                    document.getElementById('userAvatarBadge').innerHTML = `<img src="${window.currentUser.faceImage}" class="w-full h-full object-cover">`;
+                }
             } else {
                 info.classList.add('hidden');
                 regBtn.classList.remove('hidden');
             }
         }
 
-        // CARGO OPERATIONS
+        // CARGO POSTING
         function handlePriceTypeChange(val) {
             const w = document.getElementById('cargoPriceWrapper');
             if (val === 'negotiable') w.style.display = 'none';
@@ -624,6 +742,7 @@
             const newCargo = {
                 from, to, weight, price, priceType, truckType, phone,
                 author: window.currentUser.name,
+                authorFace: window.currentUser.faceImage || '',
                 status: 'active',
                 createdAt: new Date().toISOString()
             };
@@ -661,7 +780,7 @@
                     <div>
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-extrabold text-slate-900">${c.from}</span>
-                            <span class="text-blue-600 font-bold">➔</span>
+                            <span class="text-sky-600 font-bold">➔</span>
                             <span class="text-xs font-extrabold text-slate-900">${c.to}</span>
                             <span class="px-2 py-0.5 rounded text-[9px] font-bold ${c.status === 'accepted' ? 'bg-rose-100 text-rose-600' : 'bg-emerald-100 text-emerald-600'}">
                                 ${c.status === 'accepted' ? 'Band' : 'Faol'}
@@ -695,26 +814,29 @@
                 <div class="apple-card p-5 rounded-[28px] flex flex-col justify-between space-y-4">
                     <div>
                         <div class="flex justify-between items-center mb-2">
-                            <span class="px-2.5 py-1 rounded-xl text-[10px] font-bold ${c.status === 'accepted' ? 'bg-rose-100 text-rose-600' : 'bg-blue-50 text-blue-600'}">
+                            <span class="px-2.5 py-1 rounded-xl text-[10px] font-bold ${c.status === 'accepted' ? 'bg-rose-100 text-rose-600' : 'bg-sky-50 text-sky-600'}">
                                 ${c.status === 'accepted' ? 'Band qilingan' : 'Faol e\'lon'}
                             </span>
-                            <span class="text-[10px] font-bold text-slate-400">${c.truckType}</span>
+                            <div class="flex items-center gap-1.5">
+                                ${c.authorFace ? `<img src="${c.authorFace}" class="w-5 h-5 rounded-full object-cover border border-sky-300">` : ''}
+                                <span class="text-[10px] font-bold text-slate-500">${c.author}</span>
+                            </div>
                         </div>
                         <div class="flex items-center gap-2 mb-1">
                             <h3 class="text-sm font-extrabold text-slate-900">${c.from}</h3>
-                            <span class="text-blue-600 font-bold">➔</span>
+                            <span class="text-sky-600 font-bold">➔</span>
                             <h3 class="text-sm font-extrabold text-slate-900">${c.to}</h3>
                         </div>
                         <p class="text-xs text-slate-600">${c.weight}</p>
-                        <p class="text-xs font-extrabold text-blue-600 mt-2">${c.priceType === 'negotiable' ? 'Kelishuv asosida' : c.price.toLocaleString() + ' UZS'}</p>
+                        <p class="text-xs font-extrabold text-sky-600 mt-2">${c.priceType === 'negotiable' ? 'Kelishuv asosida' : c.price.toLocaleString() + ' UZS'}</p>
                     </div>
 
                     <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
                         ${c.status === 'accepted' ? `
                             <button onclick="changeStatus('${c.id}', 'active')" class="w-full py-2.5 rounded-xl bg-amber-50 text-amber-700 font-bold text-xs">Dispetcher: Qayta ochish</button>
                         ` : `
-                            <a href="tel:${c.phone}" onclick="changeStatus('${c.id}', 'accepted')" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-md shadow-blue-600/20 apple-btn">
-                                📞 Qo'ng'iroq qilish & Olish
+                            <a href="tel:${c.phone}" onclick="changeStatus('${c.id}', 'accepted')" class="w-full py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs text-center shadow-md shadow-sky-600/20 apple-btn">
+                                Qo'ng'iroq qilish & Olish
                             </a>
                         `}
                     </div>
